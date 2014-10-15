@@ -36,7 +36,8 @@
     {
       "matches": [
         "*://twitter.com/*",
-        "*://disqus.com/*"
+        "*://disqus.com/*",
+        "*://www.engadget.com/*"
       ],
 
       "css": [
@@ -56,6 +57,7 @@
         "js/processor/processor.js",
         "js/processor/modules/processor.twitter.js",
         "js/processor/modules/processor.disqus.js",
+        "js/processor/modules/processor.engadget.js",
         "js/popline/jquery.popline.js",
         "js/popline/plugins/jquery.popline.opinion.js",
         "js/popline/plugins/jquery.popline.annotation.js",

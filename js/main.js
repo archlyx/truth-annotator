@@ -23,6 +23,9 @@ $(document).ready(function() {
     processor.useModule("disqus");
     iframe = true;
     iframeReady = false;
+  } else if (host === "www.engadget.com") {
+    processor.useModule("engadget");
+    iframe = false;
   } else {
     return;
   }
