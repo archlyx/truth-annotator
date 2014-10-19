@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Twitter_Annotator": {
+            "applicationId": "Jbz8IatuSOpr7xmnNXBpnCcN1cj2ox9sPzsqggak", 
+            "masterKey": "UZ4bPKDSt19vLXbCTnzwtJbiiypqyk58Y1B1YK9A"
+        }, 
+        "_default": {
+            "link": "Twitter_Annotator"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.0"
+    }
+}
