@@ -68,3 +68,6 @@
 .ta-link:before {
   content: "j";
 }
+.ta-check-mark:before {
+  content: "k";
+}

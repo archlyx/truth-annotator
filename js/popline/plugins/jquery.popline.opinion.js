@@ -61,7 +61,7 @@
 
   $.popline.addButton({
     thumbsUp: {
-      iconClass: "ta-like",
+      iconClass: "ta-check-mark",
       mode: "always",
       beforeShow: function(popline) {
         if (popline.settings.mode === "display") {
@@ -132,7 +132,7 @@
     },
 
     thumbsDown: {
-      iconClass: "ta-dislike",
+      iconClass: "ta-x",
       mode: "always",
       beforeShow: function(popline) {
 
