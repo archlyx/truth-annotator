@@ -467,6 +467,18 @@
             console.log("Could not query UserAnnotation!");
           }
         });
+      },
+
+      integrityCheck: function(keyList, object) {
+        for (var i = 0; i < keyList.length; i++) {
+          var key = keyList[i];
+          if (typeof(object[key]) === "undefined"){
+            return false;
+          } else if ($.trim(object[key]) === "") {
+            return false;
+          }
+        }
+        return true;
       }
 
     }
