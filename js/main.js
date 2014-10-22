@@ -26,6 +26,9 @@ $(document).ready(function() {
   } else if (host === "www.engadget.com") {
     processor.useModule("engadget");
     iframe = false;
+  } else if (host === "www.usmessageboard.com") {
+    processor.useModule("usmessageboard");
+    iframe = false;
   } else {
     return;
   }
