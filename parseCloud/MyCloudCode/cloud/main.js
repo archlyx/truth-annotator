@@ -1,7 +1,5 @@
-// Use Parse.Cloud.define to define as many cloud functions as you want.
 //Lebron tweet eg
 //tweetId = "521660698162905088"
-// For example:
 
 var Twitter = require('cloud/lib/Twitter.js').Twitter;
 var config =
