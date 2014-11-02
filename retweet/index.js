@@ -9,7 +9,7 @@ var retweetNum = {};
 //this specify how many annotation is used for each collection
 var num = 1;
 
-var cronjob = cron.job("*/3 * * * * *", function(){
+var cronjob = cron.job("*/5 * * * * *", function(){
   console.log ("**************collecting retweet *****************");
   //newAnnotations = parser.getAnnotations(lastTime);
   parser.getAnnotations(lastTime, num)(
