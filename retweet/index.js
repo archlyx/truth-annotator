@@ -7,10 +7,10 @@ var newAnnotations = {};
 var retweetNum = {};
 
 //this specify how many annotation is used for each collection
-var num = 2;
+var num = 50;
 
 console.log("the program started");
-var cronjob = cron.job("*/5 * * * * *", function(){
+var cronjob = cron.job("0 0 * * * *", function(){
   console.log ("**************collecting retweet *****************");
   //newAnnotations = parser.getAnnotations(lastTime);
   parser.getAnnotations(lastTime, num)(
@@ -18,14 +18,12 @@ var cronjob = cron.job("*/5 * * * * *", function(){
       console.log("find annotation number:", annotations.length);
       if (annotations.length != 0){
         console.log("collecting retweets...");
-        retweetCollector.collect(annotations, function(map_results){
-            console.log("collected results:", map_results);
-            /*
-            console.log("updating to database...");
-            parser.update(map_results, function(){
+        retweetCollector.collect(annotations, function(map){
+            console.log("collected results in the main program:", map);
+            console.log("updating parse database...");
+            parser.update(map, function(){
               console.log("+++++++++++ DONE: the retweet is collected for annotations created before:", lastTime);
             });
-            */
           });
         lastTime = annotations[annotations.length-1].createdAt;
       }

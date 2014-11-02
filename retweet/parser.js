@@ -32,7 +32,20 @@ function getAnnotations(lastTime, num) {return function (callback, errback){
 
 function update(map, callback){
   var Annotation = Parse.Object.extend(ANNOTATION_TABLE_NAME);
+  for (var item in map){
+    var annotation = new Annotation();
+    annotation.id = item;
+    annotation.set("retweet", parseInt(map[item]));
+    annotation.save(null, {
+      success: function(annotation) {
+        console.log("parse save successfully");
+            },
+      error: function(annotation, error) {
+        console.log(error);
+            }
+      }); //end of save
+  }//end of for 
 }
-  
 
 exports.getAnnotations = getAnnotations;
+exports.update = update;
