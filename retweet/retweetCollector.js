@@ -10,23 +10,27 @@ var oauth = new OAuth.OAuth(
   'HMAC-SHA1'
 );
 
+var map_results = {};
+var counter = 0;
 //function collect(annotations){return function(callback, errback){
 function collect(annotations, callback){
-  var map_results = {};
-  var couter = 0;
     for(var i = 0; i < annotations.length; i++){
-      console.log("the object id is :", annotations[i].id);
       var objectId = annotations[i].id;
-      console.log("collecting retweets for tweet : ", tweetId, " ......");
+      var tweetId = annotations[i].get("postId");
       var request = 'https://api.twitter.com/1.1/statuses/retweets/' + tweetId + '.json?count=100&trim_user=1';
+      console.log("the tweet id is :", annotations[i].get("postId"));
+      console.log("collecting retweets for object : ", objectId, " ......");
       setMap(map_results, request, objectId, counter);
+      //console.log("the counter in the main loop", counter);
+      console.log("the map_result in the main loop", map_results);
+      console.log("the map_result length in the main loop", map_results.length);
       if(counter === annotations.length){
         callback(map_results);
       }
     }//end of for
 }// function
       
-function setMap(map, request, objectId) {
+function setMap(map, request, objectId, counter) {
   oauth.get(
     request,
     '2600799996-TUJf2enCDoUSVCwAl9ahBFs1Cuit01XgACn9e70', //test user token
