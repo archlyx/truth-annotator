@@ -15,10 +15,14 @@
   white-space: pre-wrap;
 }
 
-.popline-display {
+.popline li {
+  padding-top: 4px;
+}
+
+/*.popline-display {
   height: 204px;
   width: 350px;
-}
+}*/
 
 .popline .popline-button {
   color: white;
@@ -96,7 +100,7 @@
   color: #EEE;
 }
 
-.popline .popline-link-button {
+/*.popline .popline-link-button {
   padding-top: 5px;
 }
 
@@ -175,3 +179,4 @@
   top: 160px;
   font-weight: normal; 
 }
+*/

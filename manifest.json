@@ -63,8 +63,6 @@
         "js/popline/jquery.popline.js",
         "js/popline/plugins/jquery.popline.opinion.js",
         "js/popline/plugins/jquery.popline.annotation.js",
-        "js/popline/plugins/jquery.popline.link.js",
-        "js/simple.carousel.js",
         "js/main.js"
       ],
 

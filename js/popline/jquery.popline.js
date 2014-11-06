@@ -95,10 +95,11 @@
         mouseup: function(event) {
           var element = $.popline.current.settings.element;
           var rect = element.getBoundingClientRect();
-          var left = rect.left - 410;
+          // var left = rect.left - 210;
+          var left = event.pageX - bar.width() / 2;
           var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
           if (left < 0) left = 10;
-          var top = scrollTop + rect.top;
+          var top = scrollTop + rect.top - bar.outerHeight() -10;
           return {left: left, top: top};
         }
       }
@@ -188,7 +189,7 @@
 
     prototype: {
       init: function() {
-        this.bar = $("<div class='popline' style='z-index:" + this.settings.zIndex + "'></div>").appendTo("body");
+        this.bar = $("<ul class='popline' style='z-index:" + this.settings.zIndex + "'></ul>").appendTo("body");
         this.bar.data("popline", this);
         this.target.data("popline", this);
         var me = this;
@@ -241,7 +242,7 @@
               continue;
             }
 
-            var $button = $("<div><div class='pop-btn'></div></div>");
+            var $button = $("<li><span class='pop-btn'></span></li>");
 
             $button.addClass("popline-button popline-" + name + "-button")
 
@@ -268,16 +269,16 @@
             $button.appendTo(parent);
 
             if (button.buttons) {
-              $subbar = $("<div class='subbar'></div>");
+              $subbar = $("<ul class='subbar'></ul>");
               $button.append($subbar);
               makeButtons.call(this, $subbar, button.buttons);
               $button.click(function(event) {
                 var _this = this;
                 if (!$(this).hasClass("boxed")) {
                   me.switchBar($(this), function() {
-                    $(_this).siblings("div").hide().end()
+                    $(_this).siblings("li").hide().end()
                          .children(".pop-btn").hide().end()
-                         .children("div").show().end()
+                         .children("ul").show().end()
                   });
                   event.stopPropagation();
                 }
@@ -311,7 +312,7 @@
 
         for (var i = 0, l = this.beforeShowCallbacks.length; i < l; i++) {
           var obj = this.beforeShowCallbacks[i];
-          var $button = this.bar.find("div.popline-" + obj.name + "-button");
+          var $button = this.bar.find("li.popline-" + obj.name + "-button");
           obj.callback.call($button, this);
         }
         this.bar.css('top', options.top + "px").css('left', options.left + "px").stop(true, true).fadeIn();
@@ -323,13 +324,13 @@
         if (this.bar.is(":visible") && !this.bar.is(":animated")) {
           this.target.trigger("mouseleave");
           this.bar.fadeOut(function(){
-            _this.bar.find("div").removeClass("boxed").show();
+            _this.bar.find("li").removeClass("boxed").show();
             _this.bar.find(".subbar").hide();
             _this.bar.find(".textfield").hide();
             _this.bar.find(".pop-btn").show();
             for (var i = 0, l = _this.afterHideCallbacks.length; i < l; i++) {
               var obj = _this.afterHideCallbacks[i];
-              var $button = _this.bar.find("div.popline-" + obj.name + "-button");
+              var $button = _this.bar.find("li.popline-" + obj.name + "-button");
               obj.callback.call($button, _this);
             }
           });
