@@ -95,7 +95,6 @@
         mouseup: function(event) {
           var element = $.popline.current.settings.element;
           var rect = element.getBoundingClientRect();
-          // var left = rect.left - 210;
           var left = event.pageX - bar.width() / 2;
           var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
           if (left < 0) left = 10;
@@ -211,7 +210,6 @@
           return false;
         }
 
-
         var isDisable = function(array, name) {
           if (array === null) {
             return false;
@@ -232,7 +230,10 @@
         }
 
         var makeButtons = function(parent, buttons) {
-          for (var name in buttons) {
+          var buttonNames = (this.settings.enable) ? this.settings.enable : Object.keys(buttons);
+
+          for (var i = 0; i < buttonNames.length; i++) {
+            var name = buttonNames[i];
             var button = buttons[name];
             var mode = $.popline.utils.isNull(button.mode) ? $.popline.defaults.mode : button.mode;
 

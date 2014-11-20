@@ -32,6 +32,9 @@
       iconClass: "ta-chevron-right",
       mode: "display",
       beforeShow: function(popline) {
+        if (popline.settings["selectedText"].length == 1)
+          this.css("display", "none");
+
         if (!this.data("click-event-binded")) {
           slideChange(popline, 0, null);
           this.click(function() {
@@ -54,6 +57,9 @@
       iconClass: "ta-chevron-left",
       mode: "display",
       beforeShow: function(popline) {
+        if (popline.settings["selectedText"].length == 1)
+          this.css("display", "none");
+
         if (!this.data("click-event-binded")) {
           this.click(function() {
             var numAnnotations = popline.settings["selectedText"].length;
@@ -65,58 +71,6 @@
         }
       }
     }
-
-    // close: {
-    //   iconClass: "ta-cancel",
-    //   mode: "display",
-    //   beforeShow: function(popline) {
-    //     if (!this.data("click-event-binded")) {
-    //       this.click(function() {
-    //         $.popline.hideAllBar();
-    //       });
-    //       this.data("click-event-binded", true);
-    //     }
-    //   }
-    // },
-
-    // annotationText: {
-    //   mode: "display",
-    //   beforeShow: function(popline) {
-    //     var textField = this.find("#annotation-carousel");
-    //     if (textField.length === 0) {
-    //       this.find(".pop-btn").append("<div class=carousel><ul id=annotation-carousel></ul></div>");
-    //       textField = this.find("#annotation-carousel");
-
-    //       var selectedText = popline.settings["selectedText"];
-    //       for (var i = 0; i < selectedText.length; i++) {
-    //         textField.append("<li " + "class=" + "opinion " 
-    //                          + "index=" + i + ">"
-    //                          + selectedText[i].text + "</li>");
-    //       }
-
-    //       textField.simplecarousel({
-    //         next: popline.bar.find(".popline-nextArrow-button").find("i"),
-    //         prev: popline.bar.find(".popline-prevArrow-button").find("i"),
-    //         slidespeed: 700,
-    //         fade: 200,
-    //         width: 252,
-    //         height: 100,
-    //         auto: false,
-    //         onslidechange: function(current, previous) {
-    //           slideChange(popline, current, previous);
-    //         }
-    //       });
-
-    //     } else {
-    //       processor.utils.innerHighlight(popline.settings["element"], popline.currentAnnotation.range);
-    //     }
-
-    //   },
-
-    //   afterHide: function(popline) {
-    //     processor.utils.removeInnerHighlight(popline.settings["element"], popline.currentAnnotation.range);
-    //   }
-    // }
 
   });
 })(processor, jQuery);
