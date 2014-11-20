@@ -30,7 +30,8 @@ $(document).ready(function() {
     processor.useModule("usmessageboard");
     iframe = false;
   } else {
-    return;
+    processor.useModule("defaultMod");
+    iframe = false;
   }
   
   //There may be multiple disqus domain iframe running on the page
