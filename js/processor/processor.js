@@ -296,15 +296,13 @@
         annotation.save(entry,
         {
           success: function(result) {
-            console.log('New annotation saved');
-
             window.getSelection().removeAllRanges();
 
             processor.utils.insertAnnotationDisplay(entry, result);
             processor.database.saveUserAnnotation(entry, result);
           },
           error: function(result, error) {
-            alert("Failed to create new object, with error code: " + error.message);
+            toastr.error(error.message, "Oops, failed to save this opinion...");
           }
         });
       },
@@ -326,10 +324,9 @@
         userAnnotation.save(entrySave, {
           success: function(newUserEntry){
             toastr.success("Opinion Saved", "Thank you");
-            console.log('New annotation user saved');
           },
           error: function(newUserEntry, error){
-            alert("Failed to create new object, with error code: " + error.message);
+            toastr.error(error.message, "Oops, failed to save your opinion...");
           }
         });
       },
@@ -355,7 +352,7 @@
             processor.database.updateUserAnnotation(objectId, userOpinion.opinion);
           },
           error: function(annotation, error) {
-            alert("Failed to create new object, with error code: " + error.message);
+            toastr.error(error.message, "Oops, failed to update this opinion...");
           }
         });
 
@@ -373,7 +370,6 @@
             if (result) {
               result.set("opinion", opinion);
               result.save();
-              console.log('New opinion updated');
             } else {
               var entry = {annotationId: objectId, opinion: opinion}
               processor.database.saveUserAnnotation(entry);
@@ -381,7 +377,7 @@
             toastr.success("Opinion Updated", "Thank you");
           },
           error: function(annotation, error) {
-            alert("Failed to create new object, with error code: " + error.message);
+            toastr.error(error.message, "Oops, failed to update your opinion...");
           }
         });
       },
@@ -437,17 +433,17 @@
 
         query.find({
           success: function(results) {
-            console.log("Find " + results.length.toString() + " annotations in current view!");
-            
             if (results.length > 0) {
               var annotationsInPosts = mapAnnotationsToPosts(results);
               var annotationsIdList = generateAnnotationsIdList(results);
               $.extend(true, processor.postList, annotationsInPosts);
+
+              toastr.info("Yeah", results.length.toString() + " annotations found");
               callback(annotationsIdList, annotationsInPosts);
             }
           },
           error: function(error) {
-            console.log("Could not query Annotation!");
+            toastr.error(error.message, "Oops, something goes wrong...");
           }
         });
       },
@@ -470,7 +466,7 @@
             callback(processor.user.opinions);
           },
           error: function(error) {
-            console.log("Could not query UserAnnotation!");
+            toastr.error(error.message, "Oops, something goes wrong...");
           }
         });
       },
