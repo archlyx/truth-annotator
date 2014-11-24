@@ -1,3 +1,5 @@
+//add listener for any tab change
+chrome.tabs.onUpdated.addListener(pullLocalStorage);
 
 //set browser action icon based on user login .
 function pullLocalStorage(){
@@ -10,9 +12,6 @@ function pullLocalStorage(){
   });
 }
 
-//add listener for any tab change
-chrome.tabs.onUpdated.addListener(pullLocalStorage);
-
 //add listener for request of getting current host domain
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -20,25 +19,14 @@ chrome.runtime.onMessage.addListener(
       console.log("question received");
       sendResponse({answer: sender.tab.url});
     }
+    else
+      console.log(request);
 });
 
 /*
-function checkForValidUrl(tabId, changeInfo, tab) {
-    var URLlist = ["twitter.com", "cnn.com"];
-    // If the tabs url contains URLlist 
-    if(isCandidateURL(tab, URLlist)){
-    // ... show the page action.
-        chrome.pageAction.show(tabId);
-        //tellContent();
-    }
-};
-
-function isCandidateURL(tab, URLlist){
-    for(i = 0; i < URLlist.length; i++){
-        if(tab.url.indexOf(URLlist[i]) != -1){
-            return true;
-        }
-    }
-    return false;
-};
+chrome.cookies.onChanged.addListener(
+  function(){
+    console.log("cookie changed");
+  });
 */
+

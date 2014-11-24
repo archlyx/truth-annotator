@@ -21,17 +21,6 @@
 
       initializeUpdateEvent: function() {
       console.log("init update event");
-      /*
-        $(window).scroll(function() {
-          var origTweetNumber = Object.keys(processor.postList).length;
-          var newTweetNumber = $(processor.container).length;
-
-          if (newTweetNumber > origTweetNumber) {
-            $(window).trigger("postUpdated");
-          }
-        });
-        */
-
       }
     }
   });

@@ -15,7 +15,8 @@ function getAnnotations(lastTime, num) {return function (callback, errback){
     if (lastTime != undefined){
       query.greaterThan("createdAt", lastTime);
     }
-
+      
+    // organized in a ascending order by create time, for setting the last time after retriving. 
     query.ascending("createdAt");
 
     //limit each time we get how many annotations, for the reason of limite API call per hour

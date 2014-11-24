@@ -1,14 +1,5 @@
 Parse.initialize("Jbz8IatuSOpr7xmnNXBpnCcN1cj2ox9sPzsqggak", "anMcouVSWbzeHoJmFJBcJYrmg8XtzUatOt7hrgJX");
 
-/*
-var _userOpinion;
-var _popUserName;
-var _conUserName;
-var _popPostId;
-var _conPostId;
-var _popObject;
-var _conObject;
-*/
 $(document).ready(function(){
     var currentUserId = showNickname();
     generateToggleHTML(currentUserId, function(){
@@ -19,35 +10,22 @@ $(document).ready(function(){
 function generateToggleHTML(currentUserId, _callback) {
   var Annotation = Parse.Object.extend("Annotation");
   var query = new Parse.Query(Annotation);
-  query.descending("numberOfAgree");
-  query.limit(10);
+  query.descending("updatedAt");
+  query.limit(20);
   query.find({
     success: function(objects) {
-      var inHtml_title = '<p class=stat-title id=stat-title>top 10 agreed annotations<br></p><hr>'; 
+      var inHtml_title = '<p class=stat-title id=stat-title>Most Recent Annotations<br></p><hr>'; 
       $("#post-stat-pop").html(inHtml_title);
       //queryCurrentUser(objects, currentUserId);
       for (var i = 0; i < objects.length; i++){
         generateAnnotation(objects[i], i);
       }
-      query.descending("numberOfDisagree");
-      query.limit(10);
-      query.find({
-        success: function(objects) {
-          var inHtml_title = '<p class=stat-title id=stat-title>top 10 disagreed annotations<br></p><hr>'; 
-          $("#post-stat-pop").append(inHtml_title);
-          //queryCurrentUser(objects, currentUserId);
-          for (var i = 0; i < objects.length; i++){
-            generateAnnotation(objects[i], i+10);
-          }
-          _callback();
-        }
-      });
+      _callback();
     }
   });
 }
 
 function generateAnnotation(object, index){
-  //var opinion;
     var btnup_pop = makeButton ('btnup_pop', 'gray');
     var btndown_pop = makeButton ('btndown_pop', 'gray');
     var selectedText = object.get('selectedText');
@@ -55,43 +33,37 @@ function generateAnnotation(object, index){
     var agree = object.get('numberOfAgree');
     var disagree = object.get('numberOfDisagree');
     var source = object.get('hostDomain');
-    var inHtml_source = '<p class=stat-source>from ' + source + ': </p>'; 
+    var inHtml_source = '<p class=stat-source>' + source + ': </p>'; 
     var inHtml_text = '<p class=stat-text id=stat-text-'+ index +'> " ' + selectedText + ' "</p>';
     var inHtml_author = '<p class=stat-author>' +'--by '+ author + '</p>';
     var inHtml_agree = '<span class=stat-agree id=pop_agree>' + agree + '</span>';
     var inHtml_disagree = '<span class=stat-disagree id=pop_disagree>' + disagree + '</span>';
-    var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> see original post </span>';
-    var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree + inHtml_goPost + '<hr>';
+    //var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> see original post </span>';
+    var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree + '<hr>';
     $("#post-stat-pop").append(inHtml_pop);
     var linkId = '#pop_goPost_' + index;
     $(linkId).data("annotation", object);
 }
 
+/* generating see original post link
 function generateNewTab(node){
-  //console.log(node.data());
   var postId = node.data("annotation").get('postId');
   var userName = node.data("annotation").get('userName');
   url = 'https://twitter.com/' + userName + '/status/' + postId;
   window.open(url);
 }
+*/
 
 function bindEvent(userId){
+/** generating original post link
 
-/*
-  $('#thumbup_pop, #thumbdown_pop, #thumbup_con, #thumbdown_con').click(function(){
-    processVote($(this), userId);
-  });
-  
-  $('#thumbup_pop, #thumbdown_pop, #thumbup_con, #thumbdown_con').click(function(){
-    generateModal($(this));
-  });
-*/
   for (var i = 0; i < 20; i++){
     var linkId = '#pop_goPost_' + i;
     $(linkId).click(function(){
       generateNewTab($(this));
     });
   }
+*/
  
   $("#welcome-logout").click(function(){
       Parse.User.logOut();

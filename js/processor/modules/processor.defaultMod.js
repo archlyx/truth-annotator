@@ -17,7 +17,7 @@
         
         //console.log("userName is : ", userName, "  postId is: ", postId);
         if($( "p:contains('Egypt')" )) {
-         console.log("Found:"); 
+         console.log("Found: Egypt"); 
         }
         //console.log("Found:" , foundin);
         return {postId: postId, userName: userName};

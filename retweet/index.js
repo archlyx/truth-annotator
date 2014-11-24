@@ -12,7 +12,6 @@ var num = 50;
 console.log("the program started");
 var cronjob = cron.job("0 0 * * * *", function(){
   console.log ("**************collecting retweet *****************");
-  //newAnnotations = parser.getAnnotations(lastTime);
   parser.getAnnotations(lastTime, num)(
     function(annotations){
       console.log("find annotation number:", annotations.length);
@@ -28,16 +27,11 @@ var cronjob = cron.job("0 0 * * * *", function(){
         lastTime = annotations[annotations.length-1].createdAt;
       }
       else{ 
-        console.log("not new annotation has been added since last update");
+        console.log("no new annotation has been added since last update");
       }
     }, function(err){
       throw err;
     });
-  
-  
-  //retweetNum = retweetCollector(newAnnotations);
-  //parser.updateDatabase(retweetNum);
-
 });
 
 cronjob.start();

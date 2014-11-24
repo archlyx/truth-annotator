@@ -1,9 +1,7 @@
 /*
-
   Truth Annotator
   Version 0.0.1
-  (c) 2014 by Yu, Shuangping
-
+  (c) 2014 by Yu Zhou, Shuangping Liu
 */
 
 // Initialize parse database 
@@ -30,7 +28,9 @@ $(document).ready(function() {
     processor.useModule("usmessageboard");
     iframe = false;
   } else {
+  /*
     processor.useModule("defaultMod");
+  */
     iframe = false;
   }
   
@@ -40,7 +40,7 @@ $(document).ready(function() {
     var waitIframe = window.setInterval(function(){
       var postListEle = $(processor.initElements);
         initElementNum = postListEle.length;
-        console.log(document);
+        //console.log(document);
         if (initElementNum != 0){
           processor.refreshAnnotations(user);
           clearInterval(waitIframe);
