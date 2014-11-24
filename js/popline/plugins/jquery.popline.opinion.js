@@ -58,7 +58,7 @@
     }
     return false;
   };
-
+  
   $.popline.addButton({
     thumbsUp: {
       iconClass: "ta-check-mark",
@@ -70,6 +70,7 @@
           popline.bar.addClass("popline-annotation");
           opinion = 0;
           toggleButton(popline, 0);
+          $(this).data('selection', window.getSelection().getRangeAt(0));
         }
 
         // Bind the click behavior of the button if not set yet
@@ -107,14 +108,28 @@
           $.extend($.popline.selection, {numberOfAgree: opinion > 0 ? 1 : 0,
                                          numberOfDisagree: opinion < 0 ? 1 : 0,
                                          opinion : opinion});
+          window.getSelection().removeAllRanges();
+        
+          var $_this = $(this)
+          /* For iframe, the window.lcoation.host
+           * only return iframe domain, not the host domain
+           */
+          chrome.runtime.sendMessage({question:"what is the host domain?"}, function(response){
+            $.extend($.popline.selection, {sourceURL: response.answer}, {hostDomain: window.location.host});
+            if ($.popline.selection.opinion === 1 || $.popline.selection.opinion === -1) {
+              window.getSelection().addRange($_this.data('selection'));
+              processor.database.saveAnnotation($.popline.selection);
+            }
+          });
+          
         } else if (mode === "display" && !popline.settings.displayOnly) {
           for (var objectId in userOpinions) {
             if (isAnnotatedChanged(objectId)) {
               processor.database.updateAnnotation(objectId, userOpinions[objectId]);
             }
           }
-
         }
+
       }
     },
 

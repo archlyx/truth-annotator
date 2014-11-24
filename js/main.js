@@ -40,7 +40,6 @@ $(document).ready(function() {
     var waitIframe = window.setInterval(function(){
       var postListEle = $(processor.initElements);
         initElementNum = postListEle.length;
-        //console.log(document);
         if (initElementNum != 0){
           processor.refreshAnnotations(user);
           clearInterval(waitIframe);

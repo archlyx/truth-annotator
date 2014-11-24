@@ -45,12 +45,14 @@
       "css": [
         "css/ta-font.css",
         "css/highlight.css",
-        "js/popline/themes/default.css"
+        "js/popline/themes/default.css",
+        "js/toastr/toastr.css"
       ],
 
       "js": [
         "js/lib/parse.js",
         "js/lib/jquery.min.js",
+        "js/toastr/toastr.js",
         "js/rangy/rangy-core.js",
         "js/rangy/rangy-cssclassapplier.js",
         "js/rangy/rangy-selectionsaverestore.js",
@@ -65,8 +67,6 @@
         "js/popline/jquery.popline.js",
         "js/popline/plugins/jquery.popline.opinion.js",
         "js/popline/plugins/jquery.popline.annotation.js",
-        "js/popline/plugins/jquery.popline.link.js",
-        "js/simple.carousel.js",
         "js/main.js"
       ],
 
