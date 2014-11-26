@@ -70,6 +70,10 @@
       username: null,
       nickname: null,
       opinions: {},
+      _wholeWord: null,
+      _mark: null,
+      _highlight: null,
+      
 
       /*
         isUserLogOut:
@@ -87,10 +91,22 @@
         return false;
       },
       
-      getLoginUser: function(callback) {
-        chrome.storage.sync.get(['objectId', 'username', 'nickname'], function(user) {
+      getLoginUser: function(_callback) {
+        chrome.storage.local.get(['objectId', 'username', 'nickname'], function(user) {
           $.extend(processor.user, user, {opinions: {}});
-          callback(user);
+          _callback(user);
+        });
+      },
+
+      /*initialized optioins
+      */
+      initializeOptions: function(_callback){
+        chrome.storage.local.get(['mark', 'highlight', 'word'], function(result) {
+          processor.user._wholeWord = result.word;
+          processor.user._mark = result.mark;
+          processor.user._highlight = result.highlight;
+          console.log("the whole word option is ",processor.user._wholeWord); 
+          _callback();
         });
       }
 

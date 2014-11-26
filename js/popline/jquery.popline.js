@@ -66,8 +66,8 @@
            && rangy.getSelection().toString().length > 0)) {
         $.popline.current = $(this).data("popline");
       }
-
-      //$.popline.utils.getWholeWord(); 
+      if (processor.user._wholeWord)
+        $.popline.utils.getWholeWord(); 
     },
 
     click: function(event) {

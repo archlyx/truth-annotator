@@ -45,6 +45,10 @@ $(document).ready(function() {
       }, 3000);
   });
 
+  processor.user.initializeOptions(function(){
+    console.log("init option loaded");
+  });
+
   processor.initializeUpdateEvent();
 
   $(window).on("postUpdated", function() {
@@ -57,7 +61,30 @@ $(document).ready(function() {
     depends on if it is an iframe
   */ 
   if (!window.isTop | !iframe) {
-    chrome.storage.onChanged.addListener(function(changes, namespace) {
+  console.log("listener added");
+   chrome.storage.onChanged.addListener(function(changes, namespace) {
+    for (key in changes) {
+      var storageChange = changes[key];
+      /*
+      console.log('Storage key "%s" in namespace "%s" changed. ' +
+      'Old value was "%s", new value is "%s".',
+      key,
+      namespace,
+      storageChange.oldValue,
+      storageChange.newValue);
+      */
+      switch(key){
+        case 'mark':
+          break;
+        case 'highlight':
+          break;
+        case 'word':
+          processor.user._wholeWord = storageChange.newValue;
+          break;
+        default:
+          break;
+      }
+    }//close of for
       processor.clearAnnotations();
 
       processor.user.getLoginUser(function(user) {
@@ -66,5 +93,4 @@ $(document).ready(function() {
 
     });
   }
-
 });

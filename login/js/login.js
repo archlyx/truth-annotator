@@ -78,7 +78,7 @@ $(document).ready(function(){
         */
         
         function saveToStorage(objectId, username, nickname){
-          chrome.storage.sync.set({'objectId': objectId, 'username': username, 'nickname': nickname}, function() {
+          chrome.storage.local.set({'objectId': objectId, 'username': username, 'nickname': nickname}, function() {
              console.log('Settings saved to local storage');
           });
         } 

@@ -227,7 +227,7 @@ function processVote(node,userId){
 */
 
 function removeStorage(){
-  chrome.storage.sync.set({objectId: "", username: "", nickname:""}, function(){
+  chrome.storage.local.set({objectId: "", username: "", nickname:""}, function(){
   console.log('local nickname removed');
   });
 }
