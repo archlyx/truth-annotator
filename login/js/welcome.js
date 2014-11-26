@@ -14,7 +14,7 @@ function generateToggleHTML(currentUserId, _callback) {
   query.limit(20);
   query.find({
     success: function(objects) {
-      var inHtml_title = '<p class=stat-title id=stat-title>Most Recent Annotations<br></p><hr>'; 
+      var inHtml_title = '<p class=stat-title id=stat-title>Recent Chalkies<br></p><hr>'; 
       $("#post-stat-pop").html(inHtml_title);
       //queryCurrentUser(objects, currentUserId);
       for (var i = 0; i < objects.length; i++){

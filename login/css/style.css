@@ -262,13 +262,6 @@ body {
   top: 0px;
 }
 
-#welcome-toggle {
-  position: relative;
-  top: -32px;
-  left: 0px;
-  font-size:1em;
-}
-
 .welcome-card .stat-source{
   text-align:left;
   margin-top: -10px;
@@ -370,17 +363,6 @@ opacity: 1;
 }
 */
 
-.welcome-card .stat-title {
-  width: 100%; 
-  border:0px;
-  font-family:'roboto', sans-serif;
-  font-size: 20px;
-  color:#fff;
-  background-color:#4d90fe;
-  text-align:center;
-  position:relative;
-  top:-10px;
-}
 
 hr {
   border: 0;
@@ -400,22 +382,64 @@ hr {
 }
 
 .welcome-util {
+  position: absolute;
+  top:10px;
+  right:20px;
   width: 100%;
-  text-align: center;
+  text-align: right;
   font-size: 12px;
 }
 
-#welcome-logout {
+#welcome-img {
+  width:300px;
+  height:80px;
   position: relative;
-  top:20px;
+  top:50px;
+  width: 100%;
+}
+
+#welcome-toggle {
+  position:absolute ;
+  top: -20px;
+  left: 20px;
+  font-size:1.2em;
+}
+
+.welcome-card .stat-title {
+  width: 100%; 
+  border:0px;
+  font-family:'roboto', sans-serif;
+  font-size: 20px;
+  color:#fff;
+  background-color:#4d90fe;
+  text-align:center;
+  position:relative;
+  /*top:20px;*/
+}
+
+.post-stat{
+  position:relative;
+  top:50px;
+}
+
+
+/*
+#welcome-logout {
+  top:10px;
+  left: -110px;
+}
+
+#welcome-homepage {
+  position: relative;
+  top:15px;
   left: -110px;
 }
 
 #welcome-close {
-  position: relative;
-  top: 20px;
+  top: 10px;
   left: 110px;
 }
+*/
 
 .welcome-card a {
   text-decoration: none;
