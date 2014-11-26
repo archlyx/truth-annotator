@@ -74,6 +74,12 @@ function bindEvent(userId){
       });
   });
   
+  $("#welcome-myboard").click(function(){
+    var newURL = "http://chaofeng2014.github.io/TruthAnnotator/personal.html";
+    chrome.tabs.create({ url: newURL });
+  });
+    
+  
   $("#welcome-close").click(function(){
     window.close();
   });
