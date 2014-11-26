@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    var mark;
+    var highlight;
+    var word;
+
+    pullLocalStorage();
   
     // Switch toggle
       $('.Switch.mark').click(function() {

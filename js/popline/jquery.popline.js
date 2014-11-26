@@ -67,7 +67,7 @@
         $.popline.current = $(this).data("popline");
       }
 
-      $.popline.utils.getWholeWord(); 
+      //$.popline.utils.getWholeWord(); 
     },
 
     click: function(event) {

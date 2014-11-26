@@ -11,27 +11,22 @@ Parse.initialize("Jbz8IatuSOpr7xmnNXBpnCcN1cj2ox9sPzsqggak", "anMcouVSWbzeHoJmFJ
 rangy.init();
 
 $(document).ready(function() {
-  var iframe;
-  
+  var iframe = false;
   var host = window.location.host;
+
   if (host === "twitter.com"){
     processor.useModule("twitter");
-    iframe = false;
   } else if (host === "disqus.com") {
     processor.useModule("disqus");
     iframe = true;
-    iframeReady = false;
   } else if (host === "www.engadget.com") {
     processor.useModule("engadget");
-    iframe = false;
   } else if (host === "www.usmessageboard.com") {
     processor.useModule("usmessageboard");
-    iframe = false;
   } else {
   /*
     processor.useModule("defaultMod");
   */
-    iframe = false;
   }
   
   //There may be multiple disqus domain iframe running on the page
