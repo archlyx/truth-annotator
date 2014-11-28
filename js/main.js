@@ -1,11 +1,16 @@
 /*
-  Truth Annotator
+  TruthChalk
   Version 0.0.1
   (c) 2014 by Yu Zhou, Shuangping Liu
 */
 
 // Initialize parse database 
+//development 
+
 Parse.initialize("Jbz8IatuSOpr7xmnNXBpnCcN1cj2ox9sPzsqggak", "anMcouVSWbzeHoJmFJBcJYrmg8XtzUatOt7hrgJX");
+
+//production 
+//Parse.initialize("9zbBFAKNInGHpiGfcBDxyVtziFJKTwi3vELXFSdh", "kLfoYlttXbR595lXVKBYuvwe87pFOILQrCMG23kQ");
 
 // Initialize rangy 
 rangy.init();
