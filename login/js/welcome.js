@@ -14,7 +14,13 @@ function generateToggleHTML(currentUserId, _callback) {
   query.limit(20);
   query.find({
     success: function(objects) {
+      var inHtml_util = ' <a href="#" id="welcome-myboard">Myboard</a> <a> | </a> <a href="option.html" id="welcome-option">Option</a> <a> | </a> <a href="#" id="welcome-logout">Logout</a> <a> | </a> <a href="#" id="welcome-close">Close</a>';
+
+      var inHtml_img = '<img id="welcome-img" src="util/chalk1.jpg"/>';
       var inHtml_title = '<p class=stat-title id=stat-title>Recent Chalkies<br></p><hr>'; 
+      
+      $("#welcome-util").html(inHtml_util);
+      $("#welcome-image").html(inHtml_img);
       $("#post-stat-pop").html(inHtml_title);
       //queryCurrentUser(objects, currentUserId);
       for (var i = 0; i < objects.length; i++){
