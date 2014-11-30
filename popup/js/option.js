@@ -1,9 +1,10 @@
 $(document).ready(function() {
-    var mark;
-    var highlight;
-    var word;
+    var mark = 1;
+    var highlight = 1;
+    var word = 1;
 
     readLocalStorage();
+    //testLocalStorage();
   
     // Switch toggle
       $('.Switch.mark').click(function() {
@@ -41,6 +42,15 @@ $(document).ready(function() {
           highlight = result.highlight;
           word = result.word;
           adjustButton();
+        });
+      }
+      
+      function testLocalStorage(){
+        chrome.storage.local.set({'word': word, 'mark': mark, 'highlight': highlight}, function() {
+          console.log("optioin saved to local storage");
+          chrome.storage.local.get(['mark', 'highlight','word'], function(result){
+            console.log("the inital read is ", result);
+          });
         });
       }
 
