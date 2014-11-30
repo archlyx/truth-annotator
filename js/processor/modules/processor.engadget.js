@@ -15,7 +15,7 @@
         var postId = thisParent.attr("data-message-id");
         
         var userName   = $(postByLine).html();
-        console.log("userName is : ", userName, "  postId is: ", postId);
+        //console.log("userName is : ", userName, "  postId is: ", postId);
 
         return {postId: postId, userName: userName};
       },

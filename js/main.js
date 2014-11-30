@@ -28,10 +28,8 @@ $(document).ready(function() {
     processor.useModule("engadget");
   } else if (host === "www.usmessageboard.com") {
     processor.useModule("usmessageboard");
-  } else {
-  /*
-    processor.useModule("defaultMod");
-  */
+  } else {  
+    processor.useModule("vbulletin");
   }
   
   //There may be multiple disqus domain iframe running on the page

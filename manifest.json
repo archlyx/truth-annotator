@@ -38,8 +38,8 @@
         "*://twitter.com/*",
         "*://disqus.com/*",
         "*://www.engadget.com/*",
-        "*://www.usmessageboard.com/*"
-       // "*://*/*"
+        "*://www.usmessageboard.com/*",
+        "*://*/*"
       ],
 
       "css": [
@@ -63,7 +63,7 @@
         "js/processor/modules/processor.disqus.js",
         "js/processor/modules/processor.engadget.js",
         "js/processor/modules/processor.usmessageboard.js",
-        "js/processor/modules/processor.defaultMod.js",
+        "js/processor/modules/processor.vbulletin.js",
         "js/popline/jquery.popline.js",
         "js/popline/plugins/jquery.popline.opinion.js",
         "js/popline/plugins/jquery.popline.annotation.js",
