@@ -119,7 +119,7 @@ function makeButton(btn, color){
   var button;
   if (btn === 'btnup_pop' | btn === 'btnup_con'){
     btnClass = '"btnup"';
-    font = 'ta-like';
+    font = 'ta-check-mark';
     if(btn === 'btnup_pop')
     id = '"thumbup_pop"';
     else
@@ -127,7 +127,7 @@ function makeButton(btn, color){
   }
   else {
     btnClass = '"btndown"';
-    font = 'ta-dislike';
+    font = 'ta-x';
     if(btn === 'btndown_pop')
     id = '"thumbdown_pop"';
     else
