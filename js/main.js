@@ -32,6 +32,10 @@ $(document).ready(function() {
     processor.useModule("vbulletin");
   }
   
+  processor.option.initializeOptions(function(){
+    console.log("init option loaded");
+  });
+  
   //There may be multiple disqus domain iframe running on the page
   processor.user.getLoginUser(function(user) {
     var waitingTime = 0;
@@ -48,9 +52,6 @@ $(document).ready(function() {
       }, 3000);
   });
 
-  processor.user.initializeOptions(function(){
-    console.log("init option loaded");
-  });
 
   processor.initializeUpdateEvent();
 
@@ -68,31 +69,27 @@ $(document).ready(function() {
    chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (key in changes) {
       var storageChange = changes[key];
-      /*
-      console.log('Storage key "%s" in namespace "%s" changed. ' +
-      'Old value was "%s", new value is "%s".',
-      key,
-      namespace,
-      storageChange.oldValue,
-      storageChange.newValue);
-      */
+      console.log("the key is ", key);
       switch(key){
-        case 'mark':
+        case 'enable':
+          console.log("the enable is changed to", storageChange.newValue);
+            processor.option._enable = storageChange.newValue;
+            processor.clearAnnotations();        
+            processor.user.getLoginUser(function(user) {
+              processor.refreshAnnotations(user);        
+            });
           break;
-        case 'highlight':
-          break;
-        case 'word':
-          processor.user._wholeWord = storageChange.newValue;
+        case 'wholeWord':
+          processor.option._wholeWord = storageChange.newValue;
           break;
         default:
+          processor.clearAnnotations();
+          processor.user.getLoginUser(function(user) {
+            processor.refreshAnnotations(user);        
+          });
           break;
       }
     }//close of for
-      processor.clearAnnotations();
-
-      processor.user.getLoginUser(function(user) {
-        processor.refreshAnnotations();        
-      });
 
     });
   }

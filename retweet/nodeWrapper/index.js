@@ -10,7 +10,7 @@ var retweetNum = {};
 var num = 50;
 
 console.log("the program started");
-var cronjob = cron.job("0 0 * * * *", function(){
+var cronjob = cron.job("* */5 * * * *", function(){
   console.log ("**************collecting retweet *****************");
   parser.getAnnotations(lastTime, num)(
     function(annotations){

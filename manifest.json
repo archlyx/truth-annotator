@@ -38,7 +38,7 @@
         "*://twitter.com/*",
         "*://disqus.com/*",
         "*://www.engadget.com/*",
-        "*://www.usmessageboard.com/*",
+        "*://www.usmessageboard.com/*"
         //"*://*/*"
       ],
 
