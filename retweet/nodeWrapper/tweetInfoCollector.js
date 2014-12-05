@@ -10,8 +10,7 @@ var oauth = new OAuth.OAuth(
   'HMAC-SHA1'
 );
 
-//function collect(annotations){return function(callback, errback){
-function collect(annotations, callback){
+function collectRetweet(annotations, callback){
     var map = {};
     var counter = 0;
     for(var i = 0; i < annotations.length; i++){
@@ -33,6 +32,7 @@ function collect(annotations, callback){
       });
     }//end of for
 }// function
+
       
 function setMap(request, objectId, callback) {
   oauth.get(
@@ -50,4 +50,4 @@ function setMap(request, objectId, callback) {
   );
 }
 
-exports.collect = collect;
+exports.collect = collectRetweet;

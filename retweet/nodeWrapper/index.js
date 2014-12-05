@@ -1,6 +1,6 @@
 var cron = require("cron");
 var parser = require ("./parser");
-var retweetCollector = require ("./retweetCollector");
+var tweetInfoCollector = require ("./tweetInfoCollector");
 
 var lastTime;
 var newAnnotations = {};
@@ -10,7 +10,7 @@ var retweetNum = {};
 var num = 50;
 
 console.log("the program started");
-var cronjob = cron.job("0 0 * * * *", function(){
+var cronjob = cron.job("40 40 * * * *", function(){
   console.log ("**************collecting retweet *****************");
   parser.getAnnotations(lastTime, num)(
     function(annotations){
@@ -29,6 +29,8 @@ var cronjob = cron.job("0 0 * * * *", function(){
       else{ 
         console.log("no new annotation has been added since last update");
       }
+      var datetime = new Data();
+      console.log("retweets status updated at", datetime);
     }, function(err){
       throw err;
     });
