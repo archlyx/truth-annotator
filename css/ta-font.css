@@ -9,7 +9,6 @@
     url("chrome-extension://__MSG_@@extension_id__/fonts/ta-font.svg#ta-font") format("svg");
   font-weight: normal;
   font-style: normal;
-
 }
 
 [data-icon]:before {

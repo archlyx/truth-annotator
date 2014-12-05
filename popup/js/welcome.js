@@ -15,18 +15,18 @@ function generateToggleHTML(currentUserId, _callback) {
   var Annotation = Parse.Object.extend("Annotation");
   var query = new Parse.Query(Annotation);
   query.descending("createdAt");
-  query.limit(10);
+  query.limit(5);
   query.find({
     success: function(objects) {
       var inHtml_util = ' <a href="#" id="welcome-myboard">Myboard</a> <a> | </a> <a href="option.html" id="welcome-option">Option</a> <a> | </a> <a href="#" id="welcome-logout">Logout</a> <a> | </a> <a href="#" id="welcome-close">Close</a>';
 
-      var inHtml_img = '<img id="welcome-img" src="util/chalk1.jpg"/>';
-      var inHtml_title = '<p class=stat-title id=stat-title>Recent Chalkies<br></p><hr>'; 
+      //var inHtml_img = '<img id="welcome-img" src="util/chalk1.jpg"/>';
+      var inHtml_img = '';
+      var inHtml_title = '<p class=stat-title id=stat-title>Recent Chalks<br></p><hr>'; 
       
       $("#welcome-util").html(inHtml_util);
       $("#welcome-image").html(inHtml_img);
       $("#post-stat-pop").html(inHtml_title);
-      //queryCurrentUser(objects, currentUserId);
       for (var i = 0; i < objects.length; i++){
         generateAnnotation(objects[i], i);
       }
@@ -50,39 +50,45 @@ function generateAnnotation(object, index){
     var inHtml_agree = '<span class=stat-agree id=pop_agree>' + agree + '</span>';
     var inHtml_disagree = '<span class=stat-disagree id=pop_disagree>' + disagree + '</span>';
     var inHtml_retweet = '<span class=stat-disagree id=pop_retweet>' + retweet + '</span>';
-    if(source === "twitter.com"){
-      retweetMark = '<span class=retweet_pop id=retweet_mark data-toggle="modal" data-target="#myModal"><i class="fa ta-like"></i></span>';
+    if(source === "twitter.com" & retweet != undefined){
+      retweetMark = '<span class=retweet_pop id=retweet_mark data-toggle="modal" data-target="#myModal"><i class="icon-retweet"></i></span>';
       //retweetMark = makeRetweet();
       var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop +
-      inHtml_disagree + retweetMark + inHtml_retweet + '<hr>';
+      inHtml_disagree + retweetMark + inHtml_retweet;
     }
-    //var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> see original post </span>';
     else 
-      var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree + '<hr>';
+      var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree;
+
+    var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> go to post </span>';
+    inHtml_pop = inHtml_pop + inHtml_goPost + "<hr>";
     $("#post-stat-pop").append(inHtml_pop);
     var linkId = '#pop_goPost_' + index;
     $(linkId).data("annotation", object);
 }
 
-/* generating see original post link
+/* generating see the post link
+*/
 function generateNewTab(node){
+  var hostDomain = node.data("annotation").get('hostDomain');
+  var sourceURL = node.data("annotation").get('sourceURL');
   var postId = node.data("annotation").get('postId');
   var userName = node.data("annotation").get('userName');
-  url = 'https://twitter.com/' + userName + '/status/' + postId;
+  if (hostDomain === 'twitter.com')
+    url = 'https://twitter.com/' + userName + '/status/' + postId;
+  else 
+    url = sourceURL;
   window.open(url);
 }
-*/
 
 function bindEvent(userId){
 /** generating original post link
-
-  for (var i = 0; i < 20; i++){
+*/
+  for (var i = 0; i < 5; i++){
     var linkId = '#pop_goPost_' + i;
     $(linkId).click(function(){
       generateNewTab($(this));
     });
   }
-*/
  
   $("#welcome-logout").click(function(){
       Parse.User.logOut();
