@@ -416,7 +416,9 @@
         var generateAnnotationsIdList = function(results) {
           var annotationsIdList = [];
           for (var j = 0; j < results.length; j++) {
-            if (!(results[j].id in annotationsIdList)) {
+            if (!(results[j].id in annotationsIdList) &&
+                ((results[j].get("numberOfAgree") > 0) ||
+                 (results[j].get("numberOfDisagree") > 0))) {
               annotationsIdList.push(results[j].id);
             }
           }
@@ -437,7 +439,8 @@
 
             postId = results[j].get("postId");
             annotationsInPosts[postId] = annotationsInPosts[postId] || {selectedTexts: []};
-            if ($.inArray(annotation, annotationsInPosts[postId]) === -1) {
+            if ($.inArray(annotation, annotationsInPosts[postId]) === -1 &&
+                ((annotation.agree > 0) || (annotation.disagree > 0))) {
               annotationsInPosts[postId].selectedTexts.push(annotation);
             }
           }
@@ -454,7 +457,7 @@
               var annotationsIdList = generateAnnotationsIdList(results);
               $.extend(true, processor.postList, annotationsInPosts);
 
-              toastr.info("Yeah", results.length.toString() + " annotations found");
+              toastr.info(" ", results.length.toString() + " annotations found");
               callback(annotationsIdList, annotationsInPosts);
             }
           },

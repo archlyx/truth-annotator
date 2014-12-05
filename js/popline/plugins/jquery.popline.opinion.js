@@ -12,8 +12,10 @@
   var opinion = 0;
   var userOpinions = {};
 
-  // A table mapping the original opinion and new opinion
-  // to the increment/decrement of the number of agree/disagree
+  /* 
+   * A table mapping the original opinion and new opinion
+   * to the increment/decrement of the number of agree/disagree
+   */
   var updateNumberTable = {"0,1":  [1, 0],  "0,-1": [0, 1],
                            "1,-1": [-1, 1], "-1,1": [1, -1],
                            "1,0":  [-1, 0], "-1,0": [0, -1]};
@@ -105,13 +107,16 @@
         var mode = popline.settings.mode;
 
         if (mode === "annotation") {
-          $.extend($.popline.selection, {numberOfAgree: opinion > 0 ? 1 : 0,
-                                         numberOfDisagree: opinion < 0 ? 1 : 0,
-                                         opinion : opinion});
+          $.extend($.popline.selection, {
+            numberOfAgree: opinion > 0 ? 1 : 0,
+            numberOfDisagree: opinion < 0 ? 1 : 0,
+            opinion : opinion
+          });
           window.getSelection().removeAllRanges();
         
           var $_this = $(this)
-          /* For iframe, the window.lcoation.host
+          /* 
+           * For iframe, the window.lcoation.host
            * only return iframe domain, not the host domain
            */
           chrome.runtime.sendMessage({question:"what is the host domain?"}, function(response){
