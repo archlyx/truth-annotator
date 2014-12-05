@@ -14,8 +14,8 @@ $(document).ready(function(){
 function generateToggleHTML(currentUserId, _callback) {
   var Annotation = Parse.Object.extend("Annotation");
   var query = new Parse.Query(Annotation);
-  query.descending("updatedAt");
-  query.limit(20);
+  query.descending("createdAt");
+  query.limit(10);
   query.find({
     success: function(objects) {
       var inHtml_util = ' <a href="#" id="welcome-myboard">Myboard</a> <a> | </a> <a href="option.html" id="welcome-option">Option</a> <a> | </a> <a href="#" id="welcome-logout">Logout</a> <a> | </a> <a href="#" id="welcome-close">Close</a>';
