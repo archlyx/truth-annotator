@@ -36,20 +36,29 @@ function generateToggleHTML(currentUserId, _callback) {
 }
 
 function generateAnnotation(object, index){
+    var source = object.get('hostDomain');
     var btnup_pop = makeButton ('btnup_pop', 'gray');
     var btndown_pop = makeButton ('btndown_pop', 'gray');
     var selectedText = object.get('selectedText');
     var author = object.get('userName');
     var agree = object.get('numberOfAgree');
     var disagree = object.get('numberOfDisagree');
-    var source = object.get('hostDomain');
+    var retweet = object.get('retweet');
     var inHtml_source = '<p class=stat-source>' + source + ': </p>'; 
     var inHtml_text = '<p class=stat-text id=stat-text-'+ index +'> " ' + selectedText + ' "</p>';
     var inHtml_author = '<p class=stat-author>' +'--by '+ author + '</p>';
     var inHtml_agree = '<span class=stat-agree id=pop_agree>' + agree + '</span>';
     var inHtml_disagree = '<span class=stat-disagree id=pop_disagree>' + disagree + '</span>';
+    var inHtml_retweet = '<span class=stat-disagree id=pop_retweet>' + retweet + '</span>';
+    if(source === "twitter.com"){
+      retweetMark = '<span class=retweet_pop id=retweet_mark data-toggle="modal" data-target="#myModal"><i class="fa ta-like"></i></span>';
+      //retweetMark = makeRetweet();
+      var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop +
+      inHtml_disagree + retweetMark + inHtml_retweet + '<hr>';
+    }
     //var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> see original post </span>';
-    var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree + '<hr>';
+    else 
+      var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree + '<hr>';
     $("#post-stat-pop").append(inHtml_pop);
     var linkId = '#pop_goPost_' + index;
     $(linkId).data("annotation", object);
@@ -112,6 +121,7 @@ function queryCurrentUser(objects, userId, _callback){
 }
 */
 
+  
 function makeButton(btn, color){
   var btnClass;
   var font;

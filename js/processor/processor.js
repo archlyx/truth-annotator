@@ -37,7 +37,7 @@
 
       processor.refreshPostList();
 
-      if (isUserValidate) {
+      if (isUserValidate & processor.option._enable) {
         $(processor.initElements).popline();
       }
 
@@ -63,6 +63,26 @@
     },
 
     /* 
+      option: {}
+    */
+    option: {
+      _wholeWord: null,
+      _enable: null,
+      /*initialized optioins
+      */
+      initializeOptions: function(_callback){
+        chrome.storage.local.get(['enable', 'wholeWord'], function(result) {
+          processor.option._wholeWord = result.wholeWord;
+          processor.option._enable = result.enable;
+          console.log("the init options are ", processor.option._wholeWord, processor.option._enable); 
+          //processor.user._highlight = result.highlight;
+          _callback();
+        });
+      }
+      
+    },
+
+    /* 
       user: {objectId, username, nickname, opinions: {opinion, link}}
     */
     user: {
@@ -70,10 +90,6 @@
       username: null,
       nickname: null,
       opinions: {},
-      _wholeWord: null,
-      _mark: null,
-      _highlight: null,
-      
 
       /*
         isUserLogOut:
@@ -96,22 +112,10 @@
           $.extend(processor.user, user, {opinions: {}});
           _callback(user);
         });
-      },
-
-      /*initialized optioins
-      */
-      initializeOptions: function(_callback){
-        chrome.storage.local.get(['mark', 'highlight', 'word'], function(result) {
-          processor.user._wholeWord = result.word;
-          processor.user._mark = result.mark;
-          processor.user._highlight = result.highlight;
-          console.log("the whole word option is ",processor.user._wholeWord); 
-          _callback();
-        });
       }
 
-    },
-
+    }, 
+    
     utils: {
 
       getContainerFromRange: function(containerClass, range) {

@@ -1,20 +1,20 @@
 $(document).ready(function() {
-    var mark = 1;
-    var highlight = 1;
-    var word = 1;
+    var enable = 1;
+    //var highlight = 1;
+    var wholeWord = 1;
 
     readLocalStorage();
-    //testLocalStorage();
   
     // Switch toggle
       $('.Switch.mark').click(function() {
           $(this).toggleClass('On').toggleClass('Off');
-          mark = 1 - mark;
-          chrome.storage.local.set({'mark': mark}, function() {
+          enable = 1 - enable;
+          chrome.storage.local.set({'enable': enable}, function() {
             console.log("optioin saved to local storage");
           });
       });
       
+      /*
       $('.Switch.highlight').click(function() {
           $(this).toggleClass('On').toggleClass('Off');
           highlight = 1 - highlight;
@@ -22,11 +22,12 @@ $(document).ready(function() {
             console.log("optioin saved to local storage");
           });
       });
+      */
       
       $('.Switch.word').click(function() {
           $(this).toggleClass('On').toggleClass('Off');
-          word = 1 - word; 
-          chrome.storage.local.set({'word': word}, function() {
+          wholeWord = 1 - wholeWord; 
+          chrome.storage.local.set({'wholeWord': wholeWord}, function() {
             console.log("optioin saved to local storage");
           });
       });
@@ -36,11 +37,12 @@ $(document).ready(function() {
       });
 
       function readLocalStorage(){
-        chrome.storage.local.get(['mark', 'highlight','word'], function(result){
+        chrome.storage.local.get(['enable', 'wholeWord'], function(result){
           console.log("the inital read is ", result);
-          mark = result.mark;
-          highlight = result.highlight;
-          word = result.word;
+          if (result.enable != undefined)
+            enable = result.enable;
+          if (result.wholeWord != undefined)
+            wholeWord = result.wholeWord;
           adjustButton();
         });
       }
@@ -56,17 +58,13 @@ $(document).ready(function() {
 
       function adjustButton(){
         //console.log("adjusting button");
-        if (!mark)
+        if (!enable)
           $('.Switch.mark').toggleClass('Off');
-        if (mark)
+        else
           $('.Switch.mark').toggleClass('On');
-        if (!highlight)
-          $('.Switch.highlight').toggleClass('Off');
-        if (highlight)
-          $('.Switch.highlight').toggleClass('On');
-        if (!word)
+        if (!wholeWord)
           $('.Switch.word').toggleClass('Off');
-        if (word)
+        else
           $('.Switch.word').toggleClass('On');
       }
               
