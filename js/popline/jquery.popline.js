@@ -10,7 +10,6 @@
 */
 
 ;(function(processor, rangy, $) {
-  //var MARKSYMBOL = [',', '.', '!', '@', '#', '$ 
 
   var isIMEMode = false;
   $(document).on('compositionstart', function(event) {

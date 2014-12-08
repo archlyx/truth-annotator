@@ -157,7 +157,6 @@
         var element = post.element;
         var groupTexts = $(element).data("annotation-groups");
 
-
         if (groupTexts) {
           for (var i = 0; i < groupTexts.length; i++) {
             var groupSel = groupTexts[i].selections;
@@ -187,6 +186,11 @@
 
         processor.utils.destroyAnnotationDisplay(post);
         processor.utils.initAnnotationDisplay(post, processor.user.opinions);
+      },
+
+      removeAnnotationDisplay: function(entry, annotation) {
+        /* Refresh the popline if there is any annotation left */
+        /* Destroy popline if no annotation left */
       },
 
       groupTextRanges: function(textRanges) {
