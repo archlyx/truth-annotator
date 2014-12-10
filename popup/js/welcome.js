@@ -50,11 +50,13 @@ function generateAnnotation(object, index){
     var inHtml_agree = '<span class=stat-agree id=pop_agree>' + agree + '</span>';
     var inHtml_disagree = '<span class=stat-disagree id=pop_disagree>' + disagree + '</span>';
     var inHtml_retweet = '<span class=stat-disagree id=pop_retweet>' + retweet + '</span>';
+    var agree_text = '<span class=agree-text id=agree-text style="display:none;"> agreed </span>';
+    var disagree_text = '<span class=disagree-text id=disagree-text style="display:none;"> disagreed </span>';
+    var retweet_text = '<span class=retweet-text id=retweet-text style="display:none;"> retweets </span>';
     if(source === "twitter.com" & retweet != undefined){
       retweetMark = '<span class=retweet_pop id=retweet_mark data-toggle="modal" data-target="#myModal"><i class="icon-retweet"></i></span>';
-      //retweetMark = makeRetweet();
-      var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop +
-      inHtml_disagree + retweetMark + inHtml_retweet;
+      var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree  + agree_text + btndown_pop +
+      inHtml_disagree + disagree_text + retweetMark + inHtml_retweet + retweet_text;
     }
     else 
       var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree;
