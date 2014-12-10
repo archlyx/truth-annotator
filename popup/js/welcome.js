@@ -102,7 +102,7 @@ function bindEvent(userId){
   });
   
   $("#welcome-myboard").click(function(){
-    var newURL = "http://chaofeng2014.github.io/TruthAnnotator/personal.html";
+    var newURL = "http://www.truthchalk.com/personal.html";
     chrome.tabs.create({ url: newURL });
   });
     
