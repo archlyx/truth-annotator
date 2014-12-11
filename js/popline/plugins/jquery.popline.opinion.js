@@ -39,7 +39,7 @@
     thumbsDownButton.toggleClass("button-selected", (newOpinion < 0));
   };
 
-  var updateNumber = function(popline, newOpinion) {
+  var updateNumberDisplay = function(popline, newOpinion) {
     var bar = popline.bar;
     var numThumbsUp = bar.find(".popline-numThumbsUp-button").find(".text");
     var numThumbsDown = bar.find(".popline-numThumbsDown-button").find(".text");
@@ -47,6 +47,10 @@
     var increment = updateNumberTable[[opinion, newOpinion]];
     numThumbsUp.text(parseInt(numThumbsUp.text()) + increment[0]);
     numThumbsDown.text(parseInt(numThumbsDown.text()) + increment[1]);
+
+    var annotation = popline.settings["post"].annotations[popline.currentAnnotation.id];
+    annotations.numThumbsUp += increment[0];
+    annotations.numThumbsDown += increment[1];
 
     $.extend(userOpinions[popline.currentAnnotation.id], {increment: increment});
   };
@@ -84,7 +88,7 @@
             
             if (popline.settings.mode === "display") {
               userOpinions[popline.currentAnnotation.id] = {opinion: newOpinion};
-              updateNumber(popline, newOpinion);
+              updateNumberDisplay(popline, newOpinion);
             }
 
             opinion = newOpinion;
@@ -127,8 +131,13 @@
           });
           
         } else if (mode === "display" && !popline.settings.displayOnly) {
+          var post = popline.settings["post"];
           for (var objectId in userOpinions) {
+            var annotation = post.annotations[objectId];
             if (isAnnotatedChanged(objectId)) {
+              if ((annotation.numberOfAgree === 0) && (annotation.numberOfDisagree === 0)) {
+                processor.utils.removeAnnotation(post, annotation);
+              }
               processor.database.updateAnnotation(objectId, userOpinions[objectId]);
             }
           }
@@ -162,7 +171,7 @@
 
             if (popline.settings.mode === "display") {
               userOpinions[popline.currentAnnotation.id] = {opinion: newOpinion};
-              updateNumber(popline, newOpinion);
+              updateNumberDisplay(popline, newOpinion);
             }
 
             opinion = newOpinion;
