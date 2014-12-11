@@ -14,7 +14,7 @@
     var currentId = currentAnnotation.id;
     popline.currentAnnotation = $.extend(currentAnnotation, {order: current});
 
-    var element = popline.settings["element"];
+    var element = popline.settings["post"].element;
     if (previous !== null) {
       var previousAnnotation = popline.settings["selectedText"][previous];
       processor.utils.removeInnerHighlight(element, previousAnnotation.range);
@@ -32,24 +32,24 @@
       iconClass: "ta-chevron-right",
       mode: "display",
       beforeShow: function(popline) {
-        if (popline.settings["selectedText"].length == 1)
+        if (popline.settings["annotations"].length == 1)
           this.css("display", "none");
 
         if (!this.data("click-event-binded")) {
           slideChange(popline, 0, null);
           this.click(function() {
-            var numAnnotations = popline.settings["selectedText"].length;
+            var numAnnotations = popline.settings["annotations"].length;
             var current = popline.currentAnnotation.order;
             var next = (current === (numAnnotations - 1)) ? 0 : (current + 1);
             slideChange(popline, next, current);
           });
           this.data("click-event-binded", true);
         } else {
-          processor.utils.innerHighlight(popline.settings["element"], popline.currentAnnotation.range);  
+          processor.utils.innerHighlight(popline.settings["post"].element, popline.currentAnnotation.range);  
         }
       },
       afterHide: function(popline) {
-        processor.utils.removeInnerHighlight(popline.settings["element"], popline.currentAnnotation.range);
+        processor.utils.removeInnerHighlight(popline.settings["post"].element, popline.currentAnnotation.range);
       }
     },
 
@@ -57,12 +57,12 @@
       iconClass: "ta-chevron-left",
       mode: "display",
       beforeShow: function(popline) {
-        if (popline.settings["selectedText"].length == 1)
+        if (popline.settings["annotations"].length == 1)
           this.css("display", "none");
 
         if (!this.data("click-event-binded")) {
           this.click(function() {
-            var numAnnotations = popline.settings["selectedText"].length;
+            var numAnnotations = popline.settings["annotations"].length;
             var current = popline.currentAnnotation.order;
             var previous = (current === 0) ? (numAnnotations - 1) : (current - 1);
             slideChange(popline, previous, current);

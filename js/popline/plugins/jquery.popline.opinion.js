@@ -9,13 +9,14 @@
 
 ;(function($) {
 
+  /* User opinion for the highlighted annotation */
   var opinion = 0;
+
+  /* The opinions of the user in this popline instance */
   var userOpinions = {};
 
-  /* 
-   * A table mapping the original opinion and new opinion
-   * to the increment/decrement of the number of agree/disagree
-   */
+  /* A table mapping the original opinion and new opinion to 
+   * the increment/decrement of the number of agree/disagree */
   var updateNumberTable = {"0,1":  [1, 0],  "0,-1": [0, 1],
                            "1,-1": [-1, 1], "-1,1": [1, -1],
                            "1,0":  [-1, 0], "-1,0": [0, -1]};
@@ -114,15 +115,13 @@
           });
           window.getSelection().removeAllRanges();
         
-          var $_this = $(this)
-          /* 
-           * For iframe, the window.lcoation.host
-           * only return iframe domain, not the host domain
-           */
+          /* For iframe, the window.lcoation.host
+           * only return iframe domain, not the host domain */
+          var $_this = $(this);
           chrome.runtime.sendMessage({question:"what is the host domain?"}, function(response){
             $.extend($.popline.selection, {sourceURL: response.answer}, {hostDomain: window.location.host});
             if ($.popline.selection.opinion === 1 || $.popline.selection.opinion === -1) {
-              window.getSelection().addRange($_this.data('selection'));
+              window.getSelection().addRange($_this.data("selection"));
               processor.database.saveAnnotation($.popline.selection);
             }
           });

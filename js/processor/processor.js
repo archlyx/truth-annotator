@@ -69,11 +69,13 @@
       objectId: null,
       username: null,
       nickname: null,
+
+      /* The user opinions in current web page */
       opinions: {},
+
       _wholeWord: null,
       _mark: null,
-      _highlight: null,
-      
+      _highlight: null,     
 
       /*
         isUserLogOut:
@@ -91,14 +93,15 @@
         return false;
       },
       
-      getLoginUser: function(_callback) {
+      getLoginUser: function(callback) {
         chrome.storage.local.get(['objectId', 'username', 'nickname'], function(user) {
           $.extend(processor.user, user, {opinions: {}});
-          _callback(user);
+          callback(user);
         });
       },
 
-      /*initialized optioins
+      /* 
+        Initialize options
       */
       initializeOptions: function(_callback){
         chrome.storage.local.get(['mark', 'highlight', 'word'], function(result) {
@@ -126,15 +129,20 @@
       },
 
       initAnnotationDisplay: function(post, opinions) {
-        var element = post.element, selectedTexts = post.selectedTexts;
+        var element = post.element, annotations = post.annotations;
         var displayOnly = processor.user.isUserLogOut();
 
-        selectedTexts.sort(function(a, b) {
+        var annotationArray = [];
+        for (annotationId in annotations) {
+          annotationArray.push(annotations[annotationId]);
+        }
+
+        annotationArray.sort(function(a, b) {
            return parseInt(a.range.characterRange.start) -
                   parseInt(b.range.characterRange.start)
         }); 
 
-        var groupTexts = processor.utils.groupTextRanges(selectedTexts);
+        var groupTexts = processor.utils.groupTextRanges(annotations);
         $(element).data("annotation-groups", groupTexts);
 
         for (var i = 0; i < groupTexts.length; i++) {
@@ -145,8 +153,8 @@
           }
           $(element).find("[annotation-group = " + i + "]").popline({
             mode: "display",
-            selectedText: groupSel, 
-            element: element,
+            annotations: groupSel, 
+            post: post,
             displayOnly: displayOnly,
             enable: ["prevArrow", "thumbsUp", "numThumbsUp", "thumbsDown", "numThumbsDown", "nextArrow"]
           });
@@ -170,27 +178,30 @@
         }
       },
 
-      insertAnnotationDisplay: function(entry, result) {
+      refreshAnnotationDisplay: function(post) {
+        processor.utils.destroyAnnotationDisplay(post);
+        if (Object.keys(post.annotations).length > 0) {
+          processor.utils.initAnnotationDisplay(post, processor.user.opinions);
+        }
+      },
+
+      insertAnnotation: function(entry, result) {
         var annotation = {
           id: result.id,
-          text: entry.selectedText,
-          range: entry.textRange,
-          agree: entry.numberOfAgree,
-          disagree: entry.numberOfDisagree
+          selectedText: entry.selectedText,
+          textRange: entry.textRange,
+          numberOfAgree: entry.numberOfAgree,
+          numberOfDisagree: entry.numberOfDisagree
         };
         processor.user.opinions[result.id] = {opinion: entry.opinion, link: entry.link};
 
         var post = processor.postList[entry.postId];
-        post.selectedTexts = post.selectedTexts || [];
-        post.selectedTexts.push(annotation);
-
-        processor.utils.destroyAnnotationDisplay(post);
-        processor.utils.initAnnotationDisplay(post, processor.user.opinions);
+        post.annotations[annotation.id] = annotation;
       },
 
-      removeAnnotationDisplay: function(entry, annotation) {
-        /* Refresh the popline if there is any annotation left */
-        /* Destroy popline if no annotation left */
+      removeAnnotation: function(post, annotation) {
+        delete post.annotations[annotation.id];
+        delete processor.user.opinions[annotation.id];
       },
 
       groupTextRanges: function(textRanges) {
@@ -318,7 +329,8 @@
           success: function(result) {
             window.getSelection().removeAllRanges();
 
-            processor.utils.insertAnnotationDisplay(entry, result);
+            processor.utils.insertAnnotation(entry, result);
+            processor.utils.refreshAnnotationDisplay();
             processor.database.saveUserAnnotation(entry, result);
           },
           error: function(result, error) {
@@ -435,17 +447,16 @@
           for (var j = 0; j < results.length; j++) {
             var annotation = {
               id: results[j].id,
-              text: results[j].get("selectedText"),
-              range: results[j].get('textRange'),
-              agree: results[j].get("numberOfAgree"),
-              disagree: results[j].get("numberOfDisagree")
+              selectedText: results[j].get("selectedText"),
+              textRange: results[j].get('textRange'),
+              numberOfAgree: results[j].get("numberOfAgree"),
+              numberOfDisagree: results[j].get("numberOfDisagree")
             };
 
             postId = results[j].get("postId");
-            annotationsInPosts[postId] = annotationsInPosts[postId] || {selectedTexts: []};
-            if ($.inArray(annotation, annotationsInPosts[postId]) === -1 &&
-                ((annotation.agree > 0) || (annotation.disagree > 0))) {
-              annotationsInPosts[postId].selectedTexts.push(annotation);
+            annotationsInPosts[postId] = annotationsInPosts[postId] || {annotations: {}};
+            if ((annotation.agree > 0) || (annotation.disagree > 0)) {
+              annotationsInPosts[postId].annotations[results[j].id] = annotation;
             }
           }
           return annotationsInPosts;
