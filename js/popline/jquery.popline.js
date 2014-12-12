@@ -92,7 +92,7 @@
       },
       "display": {
         mouseup: function(event) {
-          var element = $.popline.current.settings.element;
+          var element = $.popline.current.settings.post.element;
           var rect = element.getBoundingClientRect();
           var left = event.pageX - bar.width() / 2;
           var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;

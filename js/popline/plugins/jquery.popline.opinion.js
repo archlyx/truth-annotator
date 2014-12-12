@@ -48,9 +48,9 @@
     numThumbsUp.text(parseInt(numThumbsUp.text()) + increment[0]);
     numThumbsDown.text(parseInt(numThumbsDown.text()) + increment[1]);
 
-    var annotation = popline.settings["post"].annotations[popline.currentAnnotation.id];
-    annotations.numThumbsUp += increment[0];
-    annotations.numThumbsDown += increment[1];
+    var annotation = popline.settings.post.annotations[popline.currentAnnotation.id];
+    annotation.numberOfAgree += increment[0];
+    annotation.numberOfDisagree += increment[1];
 
     $.extend(userOpinions[popline.currentAnnotation.id], {increment: increment});
   };
@@ -131,15 +131,24 @@
           });
           
         } else if (mode === "display" && !popline.settings.displayOnly) {
-          var post = popline.settings["post"];
+          var newUserOpinions = {};
+          var post = popline.settings.post;
           for (var objectId in userOpinions) {
             var annotation = post.annotations[objectId];
             if (isAnnotatedChanged(objectId)) {
+              newUserOpinions[objectId] = userOpinions[objectId];
+              console.log(userOpinions[objectId]);
+
               if ((annotation.numberOfAgree === 0) && (annotation.numberOfDisagree === 0)) {
                 processor.utils.removeAnnotation(post, annotation);
-              }
-              processor.database.updateAnnotation(objectId, userOpinions[objectId]);
+              }              
             }
+          }
+
+          processor.utils.refreshAnnotationDisplay(post);
+
+          for (var objectId in newUserOpinions) {
+            processor.database.updateAnnotation(objectId, newUserOpinions[objectId]);
           }
         }
 
@@ -152,7 +161,7 @@
       beforeShow: function(popline) {
         if (!this.data("slide-event-binded")) {
           this.on("slideChange", function() {
-            $(this).find(".text").text(popline.currentAnnotation.agree);
+            $(this).find(".text").text(popline.currentAnnotation.numberOfAgree);
           });
           this.data("slide-event-binded", true);
         }
@@ -188,7 +197,7 @@
       beforeShow: function(popline) {
         if (!this.data("slide-event-binded")) {
           this.on("slideChange", function() {
-            $(this).find(".text").text(popline.currentAnnotation.disagree);
+            $(this).find(".text").text(popline.currentAnnotation.numberOfDisagree);
           });
           this.data("slide-event-binded", true);
         }
