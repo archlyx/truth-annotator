@@ -5,13 +5,12 @@ Parse.initialize("Jbz8IatuSOpr7xmnNXBpnCcN1cj2ox9sPzsqggak", "anMcouVSWbzeHoJmFJ
 //production 
 //Parse.initialize("9zbBFAKNInGHpiGfcBDxyVtziFJKTwi3vELXFSdh", "kLfoYlttXbR595lXVKBYuvwe87pFOILQrCMG23kQ");
 
-
 $(document).ready(function(){
     var currentUser = Parse.User.current();
     if(currentUser){
         window.location.href = 'welcome.html';
     }
-    
+
     $("#login-password").focus();
 
           $("#login").click(function(){ 
@@ -34,6 +33,27 @@ $(document).ready(function(){
             login(); 
           }
       });
+
+          $(document).keypress(function(e) {
+            if(e.which == 13) {
+              var email = $("#login-email").val();
+              var password = $("#login-password").val();
+
+              if (email === "") {
+                  $('#login-info').html('<p>Please enter your registed email</p>');
+                  setTimeout( function(){$('#login-info').html('<p style="visibility:hidden">info</p>');}, 5000 );
+              }
+
+              else if (password === "") {
+                  $('#login-info').html('<p>Please enter your password</p>');
+                  setTimeout( function(){$('#login-info').html('<p style="visibility:hidden">info</p>');}, 5000 );
+              }
+                
+              else 
+                login(); 
+            }
+          });
+    
           $("#close").click(function(){window.close();}); 
     
     $("#logout").click(function(){ 
