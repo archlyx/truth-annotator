@@ -238,7 +238,6 @@
 
         if (rangy.supported && classApplierModule && classApplierModule.supported) {
           if (group) {
-            // var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight", {elementAttributes : group});
             var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight " + 
                                                          "tc-annotation-group-" + group["annotation-group"]);
           } else {
@@ -304,7 +303,6 @@
         var classApplierModule = rangy.modules.ClassApplier || rangy.modules.CssClassApplier;
 
         if (rangy.supported && classApplierModule && classApplierModule.supported) {
-          // var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight", {elementAttributes : group});
           var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight " + 
                                                        "tc-annotation-group-" + group["annotation-group"]);
           try {
