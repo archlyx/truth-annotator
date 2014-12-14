@@ -147,11 +147,12 @@
 
         for (var i = 0; i < groupTexts.length; i++) {
           var groupSel = groupTexts[i].selections;
+          console.log(groupTexts[i]);
+          processor.utils.highlight(element, groupTexts[i], {"annotation-group": i});
           for (var j = 0; j < groupSel.length; j++) {
-            processor.utils.highlight(element, groupSel[j].textRange, {"annotation-group": i});
             $.extend(groupSel[j], opinions[groupSel[j].id]);
           }
-          $(element).find("[annotation-group = " + i + "]").popline({
+          $(element).find(".tc-annotation-group-" + i).popline({
             mode: "display",
             annotations: groupSel, 
             post: post,
@@ -168,11 +169,9 @@
         if (groupTexts) {
           for (var i = 0; i < groupTexts.length; i++) {
             var groupSel = groupTexts[i].selections;
-            var $annotationGroup = $(element).find("[annotation-group = " + i + "]");
+            var $annotationGroup = $(element).find(".tc-annotation-group-" + i);
             $annotationGroup.data("popline").destroy();
-            for (var j = 0; j < groupSel.length; j++) {
-              processor.utils.removeHighlight(element, groupSel[j].textRange, {"annotation-group": i});
-            }
+            processor.utils.removeHighlight(element, groupTexts[i], {"annotation-group": i});
           }
           $(element).removeData("groupTexts");
         }
@@ -207,8 +206,10 @@
 
       groupTextRanges: function(textRanges) {
         var groupRanges = [{
-          end: textRanges[0].textRange.characterRange.end,
-          start: textRanges[0].textRange.characterRange.start,
+          characterRange: {
+            end: textRanges[0].textRange.characterRange.end,
+            start: textRanges[0].textRange.characterRange.start
+          },
           selections: [textRanges[0]]
         }];
         var groupOrder = 0;
@@ -216,13 +217,15 @@
           var characterRange = textRanges[i].textRange.characterRange;
           var group = groupRanges[groupOrder];
 
-          if (characterRange.start < group.end) {
+          if (characterRange.start < group.characterRange.end) {
             group.selections.push(textRanges[i]);
-            group.end = (characterRange.end < group.end) ? group.end : characterRange.end;
+            group.characterRange.end = (characterRange.end < group.characterRange.end) ?
+                                       group.characterRange.end : characterRange.end;
           } else {
-            groupRanges.push({end: characterRange.end,
-                              start: characterRange.start,
-                              selections: [textRanges[i]]});
+            groupRanges.push({
+              characterRange: characterRange,
+              selections: [textRanges[i]]
+            });
             groupOrder = groupOrder + 1;
           }
         }
@@ -235,12 +238,12 @@
 
         if (rangy.supported && classApplierModule && classApplierModule.supported) {
           if (group) {
-            var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight", {elementAttributes : group});
+            // var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight", {elementAttributes : group});
+            var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight " + 
+                                                         "tc-annotation-group-" + group["annotation-group"]);
           } else {
             var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight");
           }
-
-          console.log(cssApplier);
           
           try {
             if (typeof(element) != "undefined" && typeof(textRange) != "undefined") {
@@ -301,7 +304,9 @@
         var classApplierModule = rangy.modules.ClassApplier || rangy.modules.CssClassApplier;
 
         if (rangy.supported && classApplierModule && classApplierModule.supported) {
-          var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight", {elementAttributes : group});
+          // var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight", {elementAttributes : group});
+          var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight " + 
+                                                       "tc-annotation-group-" + group["annotation-group"]);
           try {
             if (typeof(element) != "undefined" && typeof(textRange) != "undefined") {
               var range = rangy.createRange(element);
