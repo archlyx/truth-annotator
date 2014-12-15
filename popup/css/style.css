@@ -1,31 +1,32 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
+/*@import url(http://fonts.googleapis.com/css?family=Roboto:400,100);*/
+@font-face {
+  font-family: "Abadi";
+  src: url("../../fonts/Abadi-MT-Cond-Light.ttf");
+}
+@font-face {
+  font-family: "Copper";
+  src: url("../../fonts/Cooper-Black.ttf");
+}
 
 body {
-  /*background: url(https://dl.dropboxusercontent.com/u/23299152/Wallpapers/wallpaper-22705.jpg) no-repeat center center
-   * fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  */
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Abadi';
 }
 
 .login-card {
   padding: 20px;
   width: 225px;
   background-color: #F7F7F7;
-  margin: 0 auto 5px;
+  margin: -10px -10px;
   border-radius: 5px;
   overflow: hidden;
 }
 
 .login-card h1 {
   font-weight: 100;
+  color: #357ae8;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 24px;
   margin-bottom: auto;
-  margin-top:x;
 }
 
 .login-card button[type=submit] {
@@ -35,19 +36,18 @@ body {
   position: relative;
 }
 
-.login-card input[type=email], input[type=password] {
+input[type=text], input[type=email], input[type=password] {
+  position: relative;
+  top: 20px;
   height: 35px;
-  font-size: 16px;
+  font-size: 18px;
   width: 100%;
-  font-family: "GothamMedium", Helvetica, Arial, sans-serif;
-  margin-bottom: 10px;
-  -webkit-appearance: none;
-  background: #fff;
-  border: 1px solid #d9d9d9;
-  border-top: 1px solid #c0c0c0;
+  font-family: 'Abadi';
   padding: 0 8px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+  margin-bottom: 7px;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
 }
 
 
@@ -62,13 +62,15 @@ body {
 .login {
   text-align: center;
   font-size: 20px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Abadi';
   font-weight: 700;
   height: 36px;
   padding: 0 8px;
 }
 
 .login-submit {
+  position: relative;
+  top: 20px;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -76,14 +78,15 @@ body {
 }
 
 .login-submit:hover {
-  /* border: 1px solid #2f5bb7; */
   border: 0px;
   text-shadow: 0 1px rgba(0,0,0,0.3);
   background-color: #357ae8;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
 }
 
 .login-card a {
+  position: relative;
+  top: 20px;
+  right:-7px;
   text-decoration: none;
   color: #666;
   font-weight: 400;
@@ -125,8 +128,9 @@ body {
   font-weight: 100;
   width: 100%;
   text-align: center;
-  font-size: 15px;
-  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-family: 'Abadi';
+  opacity:0.5;
 }
 
 /*sign up page */
@@ -134,17 +138,17 @@ body {
   padding: 20px;
   width: 225px;
   background-color: #F7F7F7;
-  margin: 0 auto 10px;
-  border-radius: 2px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  margin: -10px -10px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
 .signup-card h1 {
   font-weight: 100;
+  color: #357ae8;
   text-align: center;
-  font-size: 1.5em;
-  margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: auto;
 }
 
 .signup-card button[type=submit] {
@@ -154,39 +158,18 @@ body {
   position: relative;
 }
 
-.signup-card input[type=text], input[type=email], input[type=password] {
-  height: 35px;
-  font-size: 16px;
-  width: 100%;
-  font-family: "GothamMedium", Helvetica, Arial, sans-serif;
-  margin-bottom: 10px;
-  -webkit-appearance: none;
-  background: #fff;
-  border: 1px solid #d9d9d9;
-  border-top: 1px solid #c0c0c0;
-  padding: 0 8px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-.signup-card input[type=email]:hover, input[type=text]:hover, input[type=password]:hover {
-  border: 1px solid #b9b9b9;
-  border-top: 1px solid #a0a0a0;
-  -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-}
-
 .signup {
   text-align: center;
   font-size: 20px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Abadi';
   font-weight: 700;
   height: 36px;
   padding: 0 8px;
 }
 
 .signup-submit {
+  position: relative;
+  top: 20px;
   border: 0px;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1); 
@@ -202,14 +185,15 @@ body {
 .signup-card a{
   width: 95%;
   display: block;
-  position: right;
 }
 
 .signup-card a {
+  position: relative;
+  top: 20px;
   text-decoration: none;
   color: #666;
   font-weight: 400;
-  font-size:15px;
+  font-size:18px;
   text-align: right;
   display: inline-block;
   opacity: 0.6;
@@ -224,9 +208,8 @@ body {
   width: 100%;
   font-weight:100;
   text-align: center;
-  font-size: 15px;
-  color: blue;
-  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  opacity:0.5
 }
 
 .info p{
@@ -236,57 +219,72 @@ body {
 
 /*Welcome page*/
 .welcome-card{
-  padding-bottom: 25px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 350px;
-  margin: 0 auto 5px;
+  padding: 20px;
+  width: 400px;
+  background-color: #F7F7F7;
+  margin: 0px 0px;
   border-radius: 5px;
   overflow:scroll;
 }
 
 .welcome-card h1 {
   font-weight: 100;
+  color: #357ae8;
   text-align: center;
-  font-size: 1em;
+  font-size:26px; 
   margin-bottom: auto;
-  margin-top:x;
+  margin-top: 10px;
 }
 
 .welcome-card p {
   font-weight: 100;
-  text-align: center;
-  font-size: 1em;
+  text-align:center; 
+  font-size: 24px;
   position: relative;
   top: 0px;
 }
 
+.welcome-card .stat-title {
+  position: relative;
+  top:10px;
+  margin:10px 0px;
+  border:0px;
+  font-size: 24px;
+  opacity:0.5;
+  text-align:left;
+}
+
 .welcome-card .stat-source{
+  font-size: 18px;
   text-align:left;
   margin-top: -10px;
   margin-bottom:20px;
 }
 
 .welcome-card .stat-author{
+  font-size: 18px;
   text-align:right;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom:10px;
 }
 
 .welcome-card .stat-text {
-  font-family: "Times New Roman", Times, serif;
-  font-size:120%;
-  font-style: italic;
+  text-align: left;
+  font-size:22px;
   margin-bottom: -15px;
 }
     
 
 #pop_agree{
+  font-size:18px;
+  color:#009900;
   position: relative;
   right: -15px;
 }
 
 #pop_disagree{
+  font-size:18px;
+  color:#FF0000;
   position: relative;
   right: -45px;
 }
@@ -309,8 +307,9 @@ body {
 .stat-goPost{
 position: absolute;
 right: 20px;
-font-size:0.8em;
-opacity: 0.6;
+bottom:22px;
+font-size:16px;
+opacity: 0.5;
 text-decoration: underline;
 }
 
@@ -343,12 +342,12 @@ opacity: 1;
 }
 
 /*thumb button style*/
-.btnup{
-  color: gray;
+.btnup .fa{
+  color: #009900;
   position: relative;
   top: 0px;
   right: -10px;
-  font-size:0.8em;
+  font-size:18px;
 }
 
 /*
@@ -358,38 +357,35 @@ opacity: 1;
 }
 */
 
-.btndown{
-  color: gray;
+.btndown .fa{
+  color: #FF0000;
   position: relative;
   p: 0px;
   right: -42px;
-  font-size:0.8em;
+  font-size:18px;
 }
 
+hr {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  height: 1px;
+}
 /*
 .btndown:hover{
   color:blue;
   cursor:pointer;
 }
+
+
 */
-
-
-hr {
-  border: 0;
-  height: 1px;
-  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-  background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-  background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-  background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-}
-
+/*
 .welcome-card p {
   font-weight: 100;
   text-align: center;
-  font-size: 1em;
   position: relative;
   top: 0px;
 }
+*/
 
 .welcome-util {
   position: absolute;
@@ -399,15 +395,6 @@ hr {
   text-align: right;
   font-size: 12px;
 }
-/*
-#welcome-img {
-  width:300px;
-  height:80px;
-  position: absolute;
-  top:80px;
-  width: 88%;
-}
-*/
 
 #welcome-toggle {
   position:relative ;
@@ -418,48 +405,26 @@ hr {
   font-size:1.5em;
 }
 
-.welcome-card .stat-title {
-  border:0px;
-  font-family:'roboto', sans-serif;
-  font-size: 20px;
-  color:#fff;
-  background-color:#4d90fe;
-  text-align:center;
+.post-unit{
+  -webkit-box-shadow: #DDD 0px 1px 2px;
   position:relative;
-  /*adjust this for spacing*/
-  top:0px;
-}
-
-.post-stat{
-  position:relative;
-  /*adjust this for spacing*/
-  top:20px;
-}
-
-
-/*
-#welcome-logout {
-  top:10px;
-  left: -110px;
-}
-
-#welcome-homepage {
-  position: relative;
+  background-color: #FFFFFF;
+  border-color: #DEE184;
+  /*text-align: center;*/
+  margin: 0.5em 0px;
+  padding: 1.5em 1em;
+  -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
+  -webkit-box-shadow: #DDD 0px 1px 2px;
   top:15px;
-  left: -110px;
 }
-
-#welcome-close {
-  top: 10px;
-  left: 110px;
-}
-*/
 
 .welcome-card a {
   text-decoration: none;
   color: #666;
   font-weight: 400;
-  font-size:14px;
+  font-size:18px;
   text-align: center;
   display: inline-block;
   opacity: 0.6;
@@ -477,7 +442,6 @@ hr {
 
 /*modal style*/
 div .modal-body {
-  font-family: "Times New Roman", Times, serif;
   font-size:120%;
   font-style: italic;
   margin-bottom: 5px;
@@ -488,5 +452,4 @@ div .whole-post-highlight{
 }
 
 ::-webkit-input-placeholder {
-  font-family: 'Arial', Sans-serif;
 }

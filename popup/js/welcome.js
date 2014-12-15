@@ -18,24 +18,26 @@ function generateToggleHTML(currentUserId, _callback) {
   query.limit(5);
   query.find({
     success: function(objects) {
-      var inHtml_util = ' <a href="#" id="welcome-myboard">Myboard</a> <a> | </a> <a href="option.html" id="welcome-option">Option</a> <a> | </a> <a href="#" id="welcome-logout">Logout</a> <a> | </a> <a href="#" id="welcome-close">Close</a>';
+      var inHtml_util = ' <a href="#" id="welcome-myboard">Page</a> <a> | </a> <a href="option.html" id="welcome-option">Option</a> <a> | </a> <a href="#" id="welcome-logout">Logout</a> <a> | </a> <a href="#" id="welcome-close">Close</a>';
 
       //var inHtml_img = '<img id="welcome-img" src="util/chalk1.jpg"/>';
       var inHtml_img = '';
-      var inHtml_title = '<p class=stat-title id=stat-title>Recent Chalks<br></p><hr>'; 
       
       $("#welcome-util").html(inHtml_util);
       $("#welcome-image").html(inHtml_img);
-      $("#post-stat-pop").html(inHtml_title);
       for (var i = 0; i < objects.length; i++){
-        generateAnnotation(objects[i], i);
+        generateAnnotation(objects[i], i, function(inHtml_posts){
+          $("#post-stat-pop").append(inHtml_posts);
+          var linkId = '#pop_goPost_' + i;
+          $(linkId).data("annotation", objects[i]);
+        });
       }
       _callback();
     }
   });
 }
 
-function generateAnnotation(object, index){
+function generateAnnotation(object, index, _callback){
     var source = object.get('hostDomain');
     var btnup_pop = makeButton ('btnup_pop', 'gray');
     var btndown_pop = makeButton ('btndown_pop', 'gray');
@@ -44,7 +46,7 @@ function generateAnnotation(object, index){
     var agree = object.get('numberOfAgree');
     var disagree = object.get('numberOfDisagree');
     var retweet = object.get('retweet');
-    var inHtml_source = '<p class=stat-source>' + source + ': </p>'; 
+
     var inHtml_text = '<p class=stat-text id=stat-text-'+ index +'> " ' + selectedText + ' "</p>';
     var inHtml_author = '<p class=stat-author>' +'--by '+ author + '</p>';
     var inHtml_agree = '<span class=stat-agree id=pop_agree>' + agree + '</span>';
@@ -55,17 +57,16 @@ function generateAnnotation(object, index){
     var retweet_text = '<span class=retweet-text id=retweet-text style="display:none;"> retweets </span>';
     if(source === "twitter.com" & retweet != undefined){
       retweetMark = '<span class=retweet_pop id=retweet_mark data-toggle="modal" data-target="#myModal"><i class="icon-retweet"></i></span>';
-      var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree  + agree_text + btndown_pop +
+      var inHtml_pop = inHtml_text + inHtml_author + btnup_pop + inHtml_agree  + agree_text + btndown_pop +
       inHtml_disagree + disagree_text + retweetMark + inHtml_retweet + retweet_text;
     }
     else 
-      var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree;
+      var inHtml_pop = inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree;
 
-    var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> go to post </span>';
-    inHtml_pop = inHtml_pop + inHtml_goPost + "<hr>";
-    $("#post-stat-pop").append(inHtml_pop);
-    var linkId = '#pop_goPost_' + index;
-    $(linkId).data("annotation", object);
+    var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> Go to post at ' + source + '</span>';
+    inHtml_pop = inHtml_pop + inHtml_goPost;
+    inHtml_posts = '<div class=post-unit id=post-unit>' + inHtml_pop + '</div>';
+    _callback(inHtml_posts);
 }
 
 /* generating see the post link
@@ -273,7 +274,7 @@ function showNickname(){
   }
 
   var inHtml1 = '<h1>Hello, '; 
-  var inHtml2 = currentUser.get("nickname") + ' !' + '</h1>';
+  var inHtml2 = currentUser.get("nickname") + '</h1> <hr>';
   var inHtml = inHtml1 + inHtml2;
   $("#welcome-toggle").html(inHtml);
   return currentUser.id;
