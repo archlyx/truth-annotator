@@ -147,7 +147,6 @@
 
         for (var i = 0; i < groupTexts.length; i++) {
           var groupSel = groupTexts[i].selections;
-          console.log(groupTexts[i]);
           processor.utils.highlight(element, groupTexts[i], {"annotation-group": i});
           for (var j = 0; j < groupSel.length; j++) {
             $.extend(groupSel[j], opinions[groupSel[j].id]);

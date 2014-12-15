@@ -68,7 +68,7 @@
   
   $.popline.addButton({
     thumbsUp: {
-      iconClass: "ta-check-mark",
+      text: "T",
       mode: "always",
       beforeShow: function(popline) {
         if (popline.settings.mode === "display") {
@@ -92,6 +92,20 @@
             }
 
             opinion = newOpinion;
+          });
+
+          this.mouseenter(function(event) {
+            var _this = this;
+            setTimeout(function() {
+              $(_this).find(".text").text("TRUE");
+            }, 150); 
+          });
+
+          this.mouseleave(function(event) {
+            var _this = this;
+            setTimeout(function() {
+              $(_this).find(".text").text("T");
+            }, 150); 
           });
 
           this.on("slideChange", function() {
@@ -137,7 +151,6 @@
             var annotation = post.annotations[objectId];
             if (isAnnotatedChanged(objectId)) {
               newUserOpinions[objectId] = userOpinions[objectId];
-              console.log(userOpinions[objectId]);
 
               if ((annotation.numberOfAgree === 0) && (annotation.numberOfDisagree === 0)) {
                 processor.utils.removeAnnotation(post, annotation);
@@ -169,7 +182,7 @@
     },
 
     thumbsDown: {
-      iconClass: "ta-x",
+      text: "F",
       mode: "always",
       beforeShow: function(popline) {
 
@@ -185,6 +198,21 @@
 
             opinion = newOpinion;
           });
+
+          this.mouseenter(function(event) {
+            var _this = this;
+            setTimeout(function() {
+              $(_this).find(".text").text("FALSE");
+            }, 150); 
+          });
+
+          this.mouseleave(function(event) {
+            var _this = this;
+            setTimeout(function() {
+              $(_this).find(".text").text("F");
+            }, 150); 
+          });
+
           this.data("click-event-binded", true);
         }
 

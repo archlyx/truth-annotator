@@ -1,10 +1,9 @@
 .popline {
-  min-height: 40px;
+  min-height: 45px;
   max-width: 340px;
-  line-height: 40px;
+  line-height: 45px;
   position: absolute;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.75);
-  background: rgba(56, 169, 247, 1.0);
+  background: rgba(56, 169, 247, 0.0);
   opacity: 0.95;
   display: none;
   margin: 0;
@@ -27,6 +26,41 @@
   min-width: 24px;
   text-align: center;
   display: inline-block;
+}
+
+.popline .popline-thumbsUp-button {
+  background: rgba(112, 173, 71, 0.95);
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  position: absolute;
+  width: 48px;
+  right: 18px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.75);
+  z-index: -1;
+  transition: width 300ms linear;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: "Segoe UI Black";
+}
+
+.popline .popline-thumbsUp-button:hover {
+  width: 100px;
+}
+
+.popline .popline-thumbsDown-button {
+  background: rgba(255, 45, 45, 0.95);
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  position: absolute;
+  width: 48px;
+  left: 0px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.75);
+  z-index: -1;
+  transition: width 300ms linear;
+  font-family: "Segoe UI Black";
+}
+
+.popline .popline-thumbsDown-button:hover {
+  width: 100px;
 }
 
 .popline .popline-button i {
@@ -55,10 +89,9 @@
 }
 
 .popline .popline-button .text {
-  font-size: 17px; 
-  font-weight: bold;
+  font-size: 25px;
   line-height: 25px;
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 .popline .popline-button span.text {

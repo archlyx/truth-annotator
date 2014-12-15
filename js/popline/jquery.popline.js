@@ -349,7 +349,7 @@
           var position = parseInt(_this.bar.css('left')) + _this.bar.width() / 2;
           _this.bar.animate({ opacity: 0, marginTop: -_this.bar.height() + 'px' }, function() {
             hideFunc.call(this);
-            button.removeClass('hover').addClass('boxed').show();
+            button.removeClass('popline-hover').addClass('popline-boxed').show();
             _this.bar.css("margin-top", _this.bar.height() + "px")
             _this.bar.css("left", position - _this.bar.width() / 2 + "px");
             if (typeof(showFunc) === "function") {
