@@ -156,7 +156,7 @@
             annotations: groupSel, 
             post: post,
             displayOnly: displayOnly,
-            enable: ["prevArrow", "thumbsUp", "numThumbsUp", "thumbsDown", "numThumbsDown", "nextArrow"]
+            enable: ["prevArrow", "thumbsUp", "thumbsDown", "nextArrow"]
           });
         }
       },

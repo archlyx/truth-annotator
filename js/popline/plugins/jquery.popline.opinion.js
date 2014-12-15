@@ -32,8 +32,8 @@
 
   var toggleButton = function(popline, newOpinion) {
     var bar = popline.bar;
-    var thumbsUpButton = bar.find(".popline-thumbsUp-button").find("i");
-    var thumbsDownButton = bar.find(".popline-thumbsDown-button").find("i");
+    var thumbsUpButton = bar.find(".popline-thumbsUp-button").find(".trueIcon");
+    var thumbsDownButton = bar.find(".popline-thumbsDown-button").find(".falseIcon");
 
     thumbsUpButton.toggleClass("button-selected", (newOpinion > 0));
     thumbsDownButton.toggleClass("button-selected", (newOpinion < 0));
@@ -41,8 +41,8 @@
 
   var updateNumberDisplay = function(popline, newOpinion) {
     var bar = popline.bar;
-    var numThumbsUp = bar.find(".popline-numThumbsUp-button").find(".text");
-    var numThumbsDown = bar.find(".popline-numThumbsDown-button").find(".text");
+    var numThumbsUp = bar.find(".popline-thumbsUp-button").find(".numTrue");
+    var numThumbsDown = bar.find(".popline-thumbsDown-button").find(".numFalse");
 
     var increment = updateNumberTable[[opinion, newOpinion]];
     numThumbsUp.text(parseInt(numThumbsUp.text()) + increment[0]);
@@ -68,11 +68,13 @@
   
   $.popline.addButton({
     thumbsUp: {
-      text: "T",
+      text: "T<span class=\"suffix\">RUE</span>",
+      textClass: "trueIcon",
       mode: "always",
       beforeShow: function(popline) {
         if (popline.settings.mode === "display") {
           popline.bar.addClass("popline-display");
+          $(this).find(".pop-btn").append("<span class=\"text numTrue\">0</span>");
         } else if (popline.settings.mode === "annotation") {
           popline.bar.addClass("popline-annotation");
           opinion = 0;
@@ -90,24 +92,19 @@
               userOpinions[popline.currentAnnotation.id] = {opinion: newOpinion};
               updateNumberDisplay(popline, newOpinion);
             }
-
             opinion = newOpinion;
+            $.popline.hideAllBar();
           });
 
           this.mouseenter(function(event) {
-            var _this = this;
-            setTimeout(function() {
-              $(_this).find(".text").text("TRUE");
-            }, 150); 
+            $(this).find(".suffix").fadeIn(200);
           });
 
           this.mouseleave(function(event) {
-            var _this = this;
-            setTimeout(function() {
-              $(_this).find(".text").text("T");
-            }, 150); 
+            $(this).find(".suffix").fadeOut(100);
           });
 
+          var _this = this;
           this.on("slideChange", function() {
             var newOpinion = 0;
             if (popline.currentAnnotation.opinion) {
@@ -115,6 +112,8 @@
             }
             toggleButton(popline, newOpinion);
             opinion = newOpinion;
+
+            $(_this).parent().find(".numTrue").text(popline.currentAnnotation.numberOfAgree);
           });
 
           this.data("click-event-binded", true);
@@ -168,23 +167,14 @@
       }
     },
 
-    numThumbsUp: {
-      text: " ",
-      mode: "display",
-      beforeShow: function(popline) {
-        if (!this.data("slide-event-binded")) {
-          this.on("slideChange", function() {
-            $(this).find(".text").text(popline.currentAnnotation.numberOfAgree);
-          });
-          this.data("slide-event-binded", true);
-        }
-      }
-    },
-
     thumbsDown: {
-      text: "F",
+      text: "F<span class=\"suffix\">ALSE</span>",
+      textClass: "falseIcon",
       mode: "always",
       beforeShow: function(popline) {
+        if (popline.settings.mode === "display") {
+          $(this).find(".pop-btn").append("<span class=\"text numFalse\">0</span>");
+        }
 
         if (!this.data("click-event-binded") && !popline.settings.displayOnly) {
           this.click(function(event) {
@@ -195,40 +185,26 @@
               userOpinions[popline.currentAnnotation.id] = {opinion: newOpinion};
               updateNumberDisplay(popline, newOpinion);
             }
-
             opinion = newOpinion;
+            $.popline.hideAllBar();
           });
 
           this.mouseenter(function(event) {
-            var _this = this;
-            setTimeout(function() {
-              $(_this).find(".text").text("FALSE");
-            }, 150); 
+            $(_this).find(".suffix").fadeIn(400);
           });
 
           this.mouseleave(function(event) {
-            var _this = this;
-            setTimeout(function() {
-              $(_this).find(".text").text("F");
-            }, 150); 
+            $(this).find(".suffix").fadeOut(50);
+          });
+
+          var _this = this;
+          this.on("slideChange", function() {
+            $(_this).parent().find(".numFalse").text(popline.currentAnnotation.numberOfDisagree);
           });
 
           this.data("click-event-binded", true);
         }
 
-      }
-    },
-
-    numThumbsDown: {
-      text: " ",
-      mode: "display",
-      beforeShow: function(popline) {
-        if (!this.data("slide-event-binded")) {
-          this.on("slideChange", function() {
-            $(this).find(".text").text(popline.currentAnnotation.numberOfDisagree);
-          });
-          this.data("slide-event-binded", true);
-        }
       }
     }
 

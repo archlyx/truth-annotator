@@ -22,9 +22,9 @@
     processor.utils.innerHighlight(element, currentAnnotation.textRange);
 
     var bar = popline.bar;
-    bar.find(".popline-thumbsUp-button").find("i").trigger("slideChange");
-    bar.find(".popline-numThumbsUp-button").find(".text").trigger("slideChange");
-    bar.find(".popline-numThumbsDown-button").find(".text").trigger("slideChange");
+    bar.find(".popline-thumbsUp-button").find(".trueIcon").trigger("slideChange");
+    //bar.find(".popline-numThumbsUp-button").find(".").trigger("slideChange");
+    //bar.find(".popline-numThumbsDown-button").find(".text").trigger("slideChange");
   };
 
   $.popline.addButton({
