@@ -21,15 +21,12 @@
     }
     processor.utils.innerHighlight(element, currentAnnotation.textRange);
 
-    var bar = popline.bar;
-    bar.find(".popline-thumbsUp-button").find(".trueIcon").trigger("slideChange");
-    //bar.find(".popline-numThumbsUp-button").find(".").trigger("slideChange");
-    //bar.find(".popline-numThumbsDown-button").find(".text").trigger("slideChange");
+    popline.bar.find(".popline-thumbsUp-button").find(".trueIcon").trigger("slideChange");
   };
 
   $.popline.addButton({
     nextArrow: {
-      iconClass: "ta-chevron-right",
+      iconClass: "ta-caret-right",
       mode: "display",
       beforeShow: function(popline) {
         if (popline.settings["annotations"].length == 1)
@@ -54,7 +51,7 @@
     },
 
     prevArrow: {
-      iconClass: "ta-chevron-left",
+      iconClass: "ta-caret-left",
       mode: "display",
       beforeShow: function(popline) {
         if (popline.settings.annotations.length == 1)

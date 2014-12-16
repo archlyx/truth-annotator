@@ -61,7 +61,7 @@
   left: 0px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   z-index: 3;
-  transition: width 300ms linear;
+  transition: width 200ms linear;
   font-family: "Segoe UI Black";
 }
 
@@ -103,6 +103,22 @@
   display: none;
 }
 
+.popline-annotation span.trueIcon {
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 11px;
+  text-align: left;
+}
+
+.popline-annotation span.falseIcon {
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 11px;
+  text-align: left;
+}
+
 .popline-display span.trueIcon {
   display: inline-block;
   position: absolute;
@@ -141,18 +157,17 @@
   color: rgba(255, 255, 255, 1.0);
 }
 
-.popline .popline-button i.button-selected {
-  color: rgba(200, 200, 200, 1.0);
+.popline-display .popline-thumbsUp-button .button-selected {
+  width: 130px;
 }
 
-.popline .popline-button i.button-selected {
-  color: rgba(200, 200, 200, 1.0);
+.popline-display .popline-thumbsDown-button .button-selected {
+  width: 139px;
 }
 
 .popline .popline-button i.button-disabled {
   color: rgba(180, 180, 180, 0.7);
 }
-
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   .popline-annotation .popline-button i {
@@ -192,4 +207,8 @@
   display: none;
   list-style: none;
   padding: 0;
+}
+
+.tc-cancel-cursor {
+  cursor: url(chrome-extension://__MSG_@@extension_id__/img/cancel.svg), auto;
 }

@@ -32,8 +32,8 @@
 
   var toggleButton = function(popline, newOpinion) {
     var bar = popline.bar;
-    var thumbsUpButton = bar.find(".popline-thumbsUp-button").find(".trueIcon");
-    var thumbsDownButton = bar.find(".popline-thumbsDown-button").find(".falseIcon");
+    var thumbsUpButton = bar.find(".popline-thumbsUp-button");
+    var thumbsDownButton = bar.find(".popline-thumbsDown-button");
 
     thumbsUpButton.toggleClass("button-selected", (newOpinion > 0));
     thumbsDownButton.toggleClass("button-selected", (newOpinion < 0));

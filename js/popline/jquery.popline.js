@@ -310,6 +310,8 @@
       show: function(options) {
         $.popline.isShow = true;
 
+        $("body").addClass("tc-cancel-cursor");
+
         for (var i = 0, l = this.beforeShowCallbacks.length; i < l; i++) {
           var obj = this.beforeShowCallbacks[i];
           var $button = this.bar.find("li.popline-" + obj.name + "-button");
@@ -397,6 +399,8 @@
 
     hideAllBar: function() {
       $.popline.isShow = false;
+      $("body").removeClass("tc-cancel-cursor");
+
       for (var i = 0, l = $.popline.instances.length; i < l; i++) {
         $.popline.instances[i].hide();
       }
