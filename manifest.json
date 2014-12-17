@@ -39,7 +39,7 @@
         "*://disqus.com/*",
         "*://www.engadget.com/*",
         "*://www.usmessageboard.com/*"
-      //  "*://*/*"
+        //"*://*/*"
       ],
 
       "css": [

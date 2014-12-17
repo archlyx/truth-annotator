@@ -14,66 +14,84 @@ $(document).ready(function(){
 function generateToggleHTML(currentUserId, _callback) {
   var Annotation = Parse.Object.extend("Annotation");
   var query = new Parse.Query(Annotation);
-  query.descending("updatedAt");
-  query.limit(20);
+  query.descending("createdAt");
+  query.limit(5);
   query.find({
     success: function(objects) {
-      var inHtml_util = ' <a href="#" id="welcome-myboard">Myboard</a> <a> | </a> <a href="option.html" id="welcome-option">Option</a> <a> | </a> <a href="#" id="welcome-logout">Logout</a> <a> | </a> <a href="#" id="welcome-close">Close</a>';
+      var inHtml_util = ' <a href="#" id="welcome-myboard">Page</a> <a> | </a> <a href="option.html" id="welcome-option">Option</a> <a> | </a> <a href="#" id="welcome-logout">Logout</a> <a> | </a> <a href="#" id="welcome-close">Close</a>';
 
-      var inHtml_img = '<img id="welcome-img" src="util/chalk1.jpg"/>';
-      var inHtml_title = '<p class=stat-title id=stat-title>Recent Chalkies<br></p><hr>'; 
+      //var inHtml_img = '<img id="welcome-img" src="util/chalk1.jpg"/>';
+      var inHtml_img = '';
       
       $("#welcome-util").html(inHtml_util);
       $("#welcome-image").html(inHtml_img);
-      $("#post-stat-pop").html(inHtml_title);
-      //queryCurrentUser(objects, currentUserId);
       for (var i = 0; i < objects.length; i++){
-        generateAnnotation(objects[i], i);
+        generateAnnotation(objects[i], i, function(inHtml_posts){
+          $("#post-stat-pop").append(inHtml_posts);
+          var linkId = '#pop_goPost_' + i;
+          $(linkId).data("annotation", objects[i]);
+        });
       }
       _callback();
     }
   });
 }
 
-function generateAnnotation(object, index){
+function generateAnnotation(object, index, _callback){
+    var source = object.get('hostDomain');
     var btnup_pop = makeButton ('btnup_pop', 'gray');
     var btndown_pop = makeButton ('btndown_pop', 'gray');
     var selectedText = object.get('selectedText');
     var author = object.get('userName');
     var agree = object.get('numberOfAgree');
     var disagree = object.get('numberOfDisagree');
-    var source = object.get('hostDomain');
-    var inHtml_source = '<p class=stat-source>' + source + ': </p>'; 
+    var retweet = object.get('retweet');
+
     var inHtml_text = '<p class=stat-text id=stat-text-'+ index +'> " ' + selectedText + ' "</p>';
     var inHtml_author = '<p class=stat-author>' +'--by '+ author + '</p>';
     var inHtml_agree = '<span class=stat-agree id=pop_agree>' + agree + '</span>';
     var inHtml_disagree = '<span class=stat-disagree id=pop_disagree>' + disagree + '</span>';
-    //var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> see original post </span>';
-    var inHtml_pop = inHtml_source + inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree + '<hr>';
-    $("#post-stat-pop").append(inHtml_pop);
-    var linkId = '#pop_goPost_' + index;
-    $(linkId).data("annotation", object);
+    var inHtml_retweet = '<span class=stat-disagree id=pop_retweet>' + retweet + '</span>';
+    var agree_text = '<span class=agree-text id=agree-text style="display:none;"> agreed </span>';
+    var disagree_text = '<span class=disagree-text id=disagree-text style="display:none;"> disagreed </span>';
+    var retweet_text = '<span class=retweet-text id=retweet-text style="display:none;"> retweets </span>';
+    if(source === "twitter.com" & retweet != undefined){
+      retweetMark = '<span class=retweet_pop id=retweet_mark data-toggle="modal" data-target="#myModal"><i class="icon-retweet"></i></span>';
+      var inHtml_pop = inHtml_text + inHtml_author + btnup_pop + inHtml_agree  + agree_text + btndown_pop +
+      inHtml_disagree + disagree_text + retweetMark + inHtml_retweet + retweet_text;
+    }
+    else 
+      var inHtml_pop = inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree;
+
+    var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> Go to post at ' + source + '</span>';
+    inHtml_pop = inHtml_pop + inHtml_goPost;
+    inHtml_posts = '<div class=post-unit id=post-unit>' + inHtml_pop + '</div>';
+    _callback(inHtml_posts);
 }
 
-/* generating see original post link
+/* generating see the post link
+*/
 function generateNewTab(node){
+  var hostDomain = node.data("annotation").get('hostDomain');
+  var sourceURL = node.data("annotation").get('sourceURL');
   var postId = node.data("annotation").get('postId');
   var userName = node.data("annotation").get('userName');
-  url = 'https://twitter.com/' + userName + '/status/' + postId;
+  if (hostDomain === 'twitter.com')
+    url = 'https://twitter.com/' + userName + '/status/' + postId;
+  else 
+    url = sourceURL;
   window.open(url);
 }
-*/
 
 function bindEvent(userId){
 /** generating original post link
-
-  for (var i = 0; i < 20; i++){
+*/
+  for (var i = 0; i < 5; i++){
     var linkId = '#pop_goPost_' + i;
     $(linkId).click(function(){
       generateNewTab($(this));
     });
   }
-*/
  
   $("#welcome-logout").click(function(){
       Parse.User.logOut();
@@ -85,7 +103,7 @@ function bindEvent(userId){
   });
   
   $("#welcome-myboard").click(function(){
-    var newURL = "http://chaofeng2014.github.io/TruthAnnotator/personal.html";
+    var newURL = "http://www.truthchalk.com/personal.html";
     chrome.tabs.create({ url: newURL });
   });
     
@@ -112,6 +130,7 @@ function queryCurrentUser(objects, userId, _callback){
 }
 */
 
+  
 function makeButton(btn, color){
   var btnClass;
   var font;
@@ -119,7 +138,7 @@ function makeButton(btn, color){
   var button;
   if (btn === 'btnup_pop' | btn === 'btnup_con'){
     btnClass = '"btnup"';
-    font = 'ta-like';
+    font = 'ta-check-mark';
     if(btn === 'btnup_pop')
     id = '"thumbup_pop"';
     else
@@ -127,7 +146,7 @@ function makeButton(btn, color){
   }
   else {
     btnClass = '"btndown"';
-    font = 'ta-dislike';
+    font = 'ta-x';
     if(btn === 'btndown_pop')
     id = '"thumbdown_pop"';
     else
@@ -255,7 +274,7 @@ function showNickname(){
   }
 
   var inHtml1 = '<h1>Hello, '; 
-  var inHtml2 = currentUser.get("nickname") + ' !' + '</h1>';
+  var inHtml2 = currentUser.get("nickname") + '</h1> <hr>';
   var inHtml = inHtml1 + inHtml2;
   $("#welcome-toggle").html(inHtml);
   return currentUser.id;

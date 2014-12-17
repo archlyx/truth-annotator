@@ -3,6 +3,7 @@
   var ANNOTATION_TABLE_NAME= "Annotation";
   var USER_TABLE_NAME = "User";
   var USER_ANNOTATION_TABLE_NAME = "UserAnnotation";
+  var USER_STAT_TABLE_NAME = "UserStat";
 
   $.extend(processor, {
 
@@ -37,7 +38,7 @@
 
       processor.refreshPostList();
 
-      if (isUserValidate) {
+      if (isUserValidate & processor.option._enable) {
         $(processor.initElements).popline();
       }
 
@@ -64,6 +65,30 @@
     },
 
     /* 
+      option: {}
+    */
+    option: {
+      _wholeWord: null,
+      _enable: null,
+      /*initialized optioins
+      */
+      initializeOptions: function(_callback){
+        chrome.storage.local.get(['enable', 'wholeWord'], function(result) {
+          processor.option._wholeWord = result.wholeWord;
+          processor.option._enable = result.enable;
+          if (processor.option._wholeWord === undefined)
+            processor.option._wholeWord = 1;
+          if (processor.option._enable === undefined)
+            processor.option._enable = 1;
+          console.log("the init options are ", processor.option._wholeWord, processor.option._enable); 
+          //processor.user._highlight = result.highlight;
+          _callback();
+        });
+      }
+      
+    },
+
+    /* 
       user: {objectId, username, nickname, opinions: {opinion, link}}
     */
     user: {
@@ -73,10 +98,6 @@
 
       /* The user opinions in current web page */
       opinions: {},
-
-      _wholeWord: null,
-      _mark: null,
-      _highlight: null,     
 
       /*
         isUserLogOut:
@@ -99,23 +120,10 @@
           $.extend(processor.user, user, {opinions: {}});
           callback(user);
         });
-      },
-
-      /* 
-        Initialize options
-      */
-      initializeOptions: function(_callback){
-        chrome.storage.local.get(['mark', 'highlight', 'word'], function(result) {
-          processor.user._wholeWord = result.word;
-          processor.user._mark = result.mark;
-          processor.user._highlight = result.highlight;
-          console.log("the whole word option is ",processor.user._wholeWord); 
-          _callback();
-        });
       }
 
-    },
-
+    }, 
+    
     utils: {
 
       getContainerFromRange: function(containerClass, range) {
@@ -366,9 +374,36 @@
         userAnnotation.save(entrySave, {
           success: function(newUserEntry){
             // toastr.success("Opinion Saved", "Thank you");
+            processor.database.updateUser();
           },
           error: function(newUserEntry, error){
             // toastr.error(error.message, "Oops, failed to save your opinion...");
+          }
+        });
+      },
+
+      /* update the UserStat table the "numOperation" colomn, +1 for each operation
+      */
+      updateUser: function(){
+        var UserStat = Parse.Object.extend(USER_STAT_TABLE_NAME);
+        var query = new Parse.Query(UserStat);
+        query.equalTo("userName", processor.user.username);
+        query.first({
+          success: function(result) {
+
+            if (result == undefined | result == null){
+              var userStat = new UserStat(); 
+              userStat.set("userName", processor.user.username);
+              userStat.set("numOperation", 1);
+              userStat.save();
+            }
+            else{
+              result.increment("numOperation");
+              result.save();
+            }
+          },
+          error: function(error) {
+            alert("Error: " + error.code + " " + error.message);
           }
         });
       },
@@ -416,7 +451,10 @@
               var entry = {annotationId: objectId, opinion: opinion}
               processor.database.saveUserAnnotation(entry);
             }
+
             // toastr.success("Opinion Updated", "Thank you");
+            //FIXME Is the update of UserStat necessary here? 
+            processor.database.updateUser();
           },
           error: function(annotation, error) {
             // toastr.error(error.message, "Oops, failed to update your opinion...");
