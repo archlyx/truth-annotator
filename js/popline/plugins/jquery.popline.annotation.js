@@ -14,7 +14,7 @@
     var currentId = currentAnnotation.id;
     popline.currentAnnotation = $.extend(currentAnnotation, {order: current});
 
-    var element = popline.settings["post"].element;
+    var element = processor.postList[popline.settings.postId].element;
     if (previous !== null) {
       var previousAnnotation = popline.settings.annotations[previous];
       processor.utils.removeInnerHighlight(element, previousAnnotation.textRange);
@@ -30,7 +30,7 @@
       iconClass: "tc-caret-right",
       mode: "display",
       beforeShow: function(popline) {
-        if (popline.settings["annotations"].length == 1)
+        if (popline.settings.annotations.length == 1)
           this.css("visibility", "hidden");
 
         if (!this.data("click-event-binded")) {
@@ -53,11 +53,13 @@
 
           this.data("click-event-binded", true);
         } else {
-          processor.utils.innerHighlight(popline.settings.post.element, popline.currentAnnotation.textRange);  
+          var element = processor.postList[popline.settings.postId].element;
+          processor.utils.innerHighlight(element, popline.currentAnnotation.textRange);  
         }
       },
       afterHide: function(popline) {
-        processor.utils.removeInnerHighlight(popline.settings.post.element, popline.currentAnnotation.textRange);
+        var element = processor.postList[popline.settings.postId].element;
+        processor.utils.removeInnerHighlight(element, popline.currentAnnotation.textRange);
       }
     },
 

@@ -31,7 +31,7 @@
       
       var initDisplay = function(annotationsInPosts, opinions) {
         for (var id in annotationsInPosts) {
-          processor.utils.initAnnotationDisplay(processor.postList[id], opinions);
+          processor.utils.initAnnotationDisplay(id, opinions);
         }
       };
 
@@ -128,7 +128,8 @@
         return null;
       },
 
-      initAnnotationDisplay: function(post, opinions) {
+      initAnnotationDisplay: function(postId, opinions) {
+        var post = processor.postList[postId];
         var element = post.element, annotations = post.annotations;
         var displayOnly = processor.user.isUserLogOut();
 
@@ -154,14 +155,15 @@
           $(element).find(".tc-annotation-group-" + i).popline({
             mode: "display",
             annotations: groupSel, 
-            post: post,
+            postId: postId,
             displayOnly: displayOnly,
             enable: ["prevArrow", "thumbsUp", "thumbsDown", "nextArrow"]
           });
         }
       },
 
-      destroyAnnotationDisplay: function(post) {
+      destroyAnnotationDisplay: function(postId) {
+        var post = processor.postList[postId];
         var element = post.element;
         var groupTexts = $(element).data("annotation-groups");
 
@@ -172,14 +174,15 @@
             $annotationGroup.data("popline").destroy();
             processor.utils.removeHighlight(element, groupTexts[i], {"annotation-group": i});
           }
-          $(element).removeData("groupTexts");
+          $(element).removeData("annotation-groups");
         }
       },
 
-      refreshAnnotationDisplay: function(post) {
-        processor.utils.destroyAnnotationDisplay(post);
+      refreshAnnotationDisplay: function(postId) {
+        var post = processor.postList[postId];
+        processor.utils.destroyAnnotationDisplay(postId);
         if (Object.keys(post.annotations).length > 0) {
-          processor.utils.initAnnotationDisplay(post, processor.user.opinions);
+          processor.utils.initAnnotationDisplay(postId, processor.user.opinions);
         }
       },
 
@@ -198,8 +201,10 @@
         post.annotations[annotation.id] = annotation;
       },
 
-      removeAnnotation: function(post, annotation) {
-        delete post.annotations[annotation.id];
+      removeAnnotation: function(postId, annotation) {
+        processor.postList[postId].annotations[annotation.id] = null;
+        delete processor.postList[postId].annotations[annotation.id];
+        processor.user.opinions[annotation.id] = null;
         delete processor.user.opinions[annotation.id];
       },
 
@@ -335,7 +340,7 @@
             window.getSelection().removeAllRanges();
 
             processor.utils.insertAnnotation(entry, result);
-            processor.utils.refreshAnnotationDisplay(processor.postList[entry.postId]);
+            processor.utils.refreshAnnotationDisplay(entry.postId);
             processor.database.saveUserAnnotation(entry, result);
           },
           error: function(result, error) {

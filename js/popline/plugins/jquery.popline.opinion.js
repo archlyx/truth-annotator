@@ -39,7 +39,8 @@
     numThumbsUp.text(parseInt(numThumbsUp.text()) + increment[0]);
     numThumbsDown.text(parseInt(numThumbsDown.text()) + increment[1]);
 
-    var annotation = popline.settings.post.annotations[popline.currentAnnotation.id];
+    var post = processor.postList[popline.settings.postId];
+    var annotation = post.annotations[popline.currentAnnotation.id];
     annotation.numberOfAgree += increment[0];
     annotation.numberOfDisagree += increment[1];
 
@@ -161,19 +162,22 @@
           
         } else if (mode === "display" && !popline.settings.displayOnly) {
           var newUserOpinions = {};
-          var post = popline.settings.post;
+          var postId = popline.settings.postId;
+          var post = processor.postList[postId];
+
           for (var objectId in userOpinions) {
             var annotation = post.annotations[objectId];
             if (isAnnotatedChanged(objectId)) {
               newUserOpinions[objectId] = userOpinions[objectId];
 
               if ((annotation.numberOfAgree === 0) && (annotation.numberOfDisagree === 0)) {
-                processor.utils.removeAnnotation(post, annotation);
+                delete userOpinions[objectId];
+                processor.utils.removeAnnotation(postId, annotation);
               }              
             }
           }
 
-          processor.utils.refreshAnnotationDisplay(post);
+          processor.utils.refreshAnnotationDisplay(postId);
 
           for (var objectId in newUserOpinions) {
             processor.database.updateAnnotation(objectId, newUserOpinions[objectId]);
