@@ -32,7 +32,7 @@
           var origTweetNumber = Object.keys(processor.postList).length;
           var newTweetNumber = $(processor.container).length;
 
-          if (newTweetNumber !== origTweetNumber) {
+          if (newTweetNumber - origTweetNumber >= 10) {
             $(window).trigger("postUpdated");
           }
         };
