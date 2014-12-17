@@ -14,8 +14,11 @@
   white-space: pre-wrap;
 }
 
+.popline-display .popline-unselected {
+  opacity: 0.65;
+}
+
 .popline .popline-button {
-  color: white;
   font-size: 18px;
   font-weight: normal;
   cursor: pointer;
@@ -34,22 +37,17 @@
   right: 20px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   z-index: -1;
-  transition: width 300ms linear;
+  transition: opacity 300ms linear;
   color: rgba(0, 0, 0, 0.9);
   font-family: "Segoe UI Black";
 }
 
-.popline .popline-thumbsUp-button:hover {
-  width: 100px;
-}
-
 .popline-display .popline-thumbsUp-button {
   width: 80px;
-  right: 20px;
 }
 
 .popline-display .popline-thumbsUp-button:hover {
-  width: 130px;
+  opacity: 1.0;
 }
 
 .popline .popline-thumbsDown-button {
@@ -60,43 +58,18 @@
   width: 48px;
   left: 0px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-  z-index: 3;
-  transition: width 200ms linear;
+  z-index: -1;
+  transition: opacity 300ms linear;
+  color: rgba(255, 255, 255, 0.9);
   font-family: "Segoe UI Black";
-}
-
-.popline-annotation .popline-thumbsDown-button:hover {
-  width: 100px;
 }
 
 .popline-display .popline-thumbsDown-button {
   width: 80px;
-  left: 0px;
 }
 
 .popline-display .popline-thumbsDown-button:hover {
-  width: 139px;
-}
-
-.popline .popline-numThumbsUp-button {
-  background: rgba(112, 173, 71, 1);
-  box-shadow: 2px 2.0px 2px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  z-index: 1;
-  width: 48px;
-  left: 0px;
-  color: rgba(0, 0, 0, 0.9);
-  font-family: "Agency FB";
-}
-
-.popline .popline-numThumbsDown-button {
-  background: rgba(255, 45, 45, 1);
-  box-shadow: 2px 2.0px 2px rgba(0, 0, 0, 0.5);
-  position: absolute;
-  z-index: 2;
-  width: 48px;
-  left: 48px;
-  font-family: "Agency FB";
+  opacity: 1.0;
 }
 
 .popline span.suffix{
@@ -153,22 +126,6 @@
   font-family: "Agency FB";
 }
 
-.popline .popline-button i {
-  color: rgba(255, 255, 255, 1.0);
-}
-
-.popline-display .popline-thumbsUp-button .button-selected {
-  width: 130px;
-}
-
-.popline-display .popline-thumbsDown-button .button-selected {
-  width: 139px;
-}
-
-.popline .popline-button i.button-disabled {
-  color: rgba(180, 180, 180, 0.7);
-}
-
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   .popline-annotation .popline-button i {
     padding: 0 10px;
@@ -191,16 +148,20 @@
   vertical-align: text-top;
 }
 
-.popline .popline-nextArrow-button i {
-  font-size: 10px;
-  padding-left: 13px;
-  vertical-align: 15%;
+.popline-display .popline-nextArrow-button {
+  position: absolute;
+  left: 80px;
+  top: 2px;
+  font-size: 30px;
+  color: rgba(255, 45, 45, 1);
 }
 
-.popline .popline-prevArrow-button i {
-  font-size: 10px;
-  padding-right: 13px;
-  vertical-align: 15%;
+.popline-display .popline-prevArrow-button {
+  position: absolute;
+  right: 100px;
+  top: 2px;
+  font-size: 30px;
+  color: rgba(112, 173, 71, 1);
 }
 
 .popline .subbar {

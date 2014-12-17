@@ -22,15 +22,16 @@
     processor.utils.innerHighlight(element, currentAnnotation.textRange);
 
     popline.bar.find(".popline-thumbsUp-button").find(".trueIcon").trigger("slideChange");
+    popline.bar.find(".popline-thumbsDown-button").find(".falseIcon").trigger("slideChange");
   };
 
   $.popline.addButton({
     nextArrow: {
-      iconClass: "ta-caret-right",
+      iconClass: "tc-caret-right",
       mode: "display",
       beforeShow: function(popline) {
         if (popline.settings["annotations"].length == 1)
-          this.css("display", "none");
+          this.css("visibility", "hidden");
 
         if (!this.data("click-event-binded")) {
           slideChange(popline, 0, null);
@@ -40,6 +41,16 @@
             var next = (current === (numAnnotations - 1)) ? 0 : (current + 1);
             slideChange(popline, next, current);
           });
+
+          $(document).keyup(function(event) {
+            if (event.keyCode === 39 && popline.bar.is(":visible")) {
+              var numAnnotations = popline.settings.annotations.length;
+              var current = popline.currentAnnotation.order;
+              var next = (current === (numAnnotations - 1)) ? 0 : (current + 1);
+              slideChange(popline, next, current);
+            }
+          });
+
           this.data("click-event-binded", true);
         } else {
           processor.utils.innerHighlight(popline.settings.post.element, popline.currentAnnotation.textRange);  
@@ -51,11 +62,11 @@
     },
 
     prevArrow: {
-      iconClass: "ta-caret-left",
+      iconClass: "tc-caret-left",
       mode: "display",
       beforeShow: function(popline) {
         if (popline.settings.annotations.length == 1)
-          this.css("display", "none");
+          this.css("visibility", "hidden");
 
         if (!this.data("click-event-binded")) {
           this.click(function() {
@@ -64,6 +75,16 @@
             var previous = (current === 0) ? (numAnnotations - 1) : (current - 1);
             slideChange(popline, previous, current);
           });
+
+          $(document).keyup(function(event) {
+            if (event.keyCode === 37 && popline.bar.is(":visible")) {
+              var numAnnotations = popline.settings.annotations.length;
+              var current = popline.currentAnnotation.order;
+              var previous = (current === 0) ? (numAnnotations - 1) : (current - 1);
+              slideChange(popline, previous, current);
+            }
+          });
+
           this.data("click-event-binded", true);
         }
       }

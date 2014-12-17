@@ -30,15 +30,6 @@
     return newOpinion;
   };
 
-  var toggleButton = function(popline, newOpinion) {
-    var bar = popline.bar;
-    var thumbsUpButton = bar.find(".popline-thumbsUp-button");
-    var thumbsDownButton = bar.find(".popline-thumbsDown-button");
-
-    thumbsUpButton.toggleClass("button-selected", (newOpinion > 0));
-    thumbsDownButton.toggleClass("button-selected", (newOpinion < 0));
-  };
-
   var updateNumberDisplay = function(popline, newOpinion) {
     var bar = popline.bar;
     var numThumbsUp = bar.find(".popline-thumbsUp-button").find(".numTrue");
@@ -65,6 +56,27 @@
     }
     return false;
   };
+
+  var hoverEvent = {
+    expansion: function(width, animateTimeout, fadeTimeout) {
+      $(this).animate({width: width}, animateTimeout, "linear");
+      $(this).find(".suffix").fadeIn(fadeTimeout);
+    },
+
+    contraction: function(width, animateTimeout, fadeTimeout) {
+      $(this).animate({width: width}, animateTimeout, "linear");
+      $(this).find(".suffix").fadeOut(fadeTimeout);
+    }
+  };
+
+  var toggleButton = function(popline, newOpinion) {
+    var bar = popline.bar;
+    var thumbsUpButton = bar.find(".popline-thumbsUp-button");
+    var thumbsDownButton = bar.find(".popline-thumbsDown-button");
+
+    thumbsUpButton.toggleClass("popline-unselected", (newOpinion < 0));
+    thumbsDownButton.toggleClass("popline-unselected", (newOpinion > 0));
+  };
   
   $.popline.addButton({
     thumbsUp: {
@@ -82,26 +94,30 @@
           $(this).data('selection', window.getSelection().getRangeAt(0));
         }
 
-        // Bind the click behavior of the button if not set yet
+        /* Bind the click behavior of the button if not set yet */
         if (!this.data("click-event-binded") && !popline.settings.displayOnly) {
+          this.mouseenter(function() {
+            var width = (popline.settings.mode === "display") ? 130 : 100; 
+            hoverEvent.expansion.call(this, width, 300, 200);
+            popline.bar.find(".popline-prevArrow-button").animate({right: 150}, 300, "linear");
+          });
+          this.mouseleave(function() {
+            var width = (popline.settings.mode === "display") ? 80 : 48; 
+            hoverEvent.contraction.call(this, width, 300, 100);
+            popline.bar.find(".popline-prevArrow-button").animate({right: 100}, 300, "linear");
+          });
+
           this.click(function(event) {
             var newOpinion = calcOpinion("thumbsUp");
-            toggleButton(popline, newOpinion);
             
             if (popline.settings.mode === "display") {
+              toggleButton(popline, newOpinion);
               userOpinions[popline.currentAnnotation.id] = {opinion: newOpinion};
               updateNumberDisplay(popline, newOpinion);
             }
-            opinion = newOpinion;
             $.popline.hideAllBar();
-          });
-
-          this.mouseenter(function(event) {
-            $(this).find(".suffix").fadeIn(200);
-          });
-
-          this.mouseleave(function(event) {
-            $(this).find(".suffix").fadeOut(100);
+          
+            opinion = newOpinion;
           });
 
           var _this = this;
@@ -177,24 +193,27 @@
         }
 
         if (!this.data("click-event-binded") && !popline.settings.displayOnly) {
+          this.mouseenter(function() {
+            var width = (popline.settings.mode === "display") ? 139 : 100;
+            hoverEvent.expansion.call(this, width, 300, 400);
+            popline.bar.find(".popline-nextArrow-button").animate({left: 139}, 300, "linear");
+          });
+          this.mouseleave(function() {
+            var width = (popline.settings.mode === "display") ? 80 : 48; 
+            hoverEvent.contraction.call(this, width, 300, 50);
+            popline.bar.find(".popline-nextArrow-button").animate({left: 80}, 300, "linear");
+          });
+
           this.click(function(event) {
             var newOpinion = calcOpinion("thumbsDown");
-            toggleButton(popline, newOpinion);
-
+            
             if (popline.settings.mode === "display") {
+              toggleButton(popline, newOpinion);
               userOpinions[popline.currentAnnotation.id] = {opinion: newOpinion};
               updateNumberDisplay(popline, newOpinion);
             }
-            opinion = newOpinion;
             $.popline.hideAllBar();
-          });
-
-          this.mouseenter(function(event) {
-            $(_this).find(".suffix").fadeIn(400);
-          });
-
-          this.mouseleave(function(event) {
-            $(this).find(".suffix").fadeOut(50);
+            opinion = newOpinion;
           });
 
           var _this = this;
