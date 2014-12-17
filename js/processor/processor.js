@@ -21,7 +21,7 @@
     refreshPostList: function() {
       processor.postList = {};
       $(processor.container).each(function() {
-        var info = processor.getInfoFromContainer(this)
+        var info = processor.getInfoFromContainer(this);
         processor.postList[info.postId] = {username: info.userName, element: this};
       });
     },
@@ -58,8 +58,9 @@
         annotator.destroy();
       }
       for (id in processor.postList) {
-        processor.utils.destroyAnnotationDisplay(processor.postList[id]);
+        processor.utils.destroyAnnotationDisplay(id);
       }
+      processor.postList = null;
     },
 
     /* 
@@ -344,13 +345,12 @@
             processor.database.saveUserAnnotation(entry, result);
           },
           error: function(result, error) {
-            toastr.error(error.message, "Oops, failed to save this opinion...");
+            // toastr.error(error.message, "Oops, failed to save this opinion...");
           }
         });
       },
 
       saveUserAnnotation: function(entry, result) {
-        // Here result is the result return from Parse
         var UserAnnotation = Parse.Object.extend(USER_ANNOTATION_TABLE_NAME);
         var userAnnotation = new UserAnnotation();
 
@@ -365,10 +365,10 @@
 
         userAnnotation.save(entrySave, {
           success: function(newUserEntry){
-            toastr.success("Opinion Saved", "Thank you");
+            // toastr.success("Opinion Saved", "Thank you");
           },
           error: function(newUserEntry, error){
-            toastr.error(error.message, "Oops, failed to save your opinion...");
+            // toastr.error(error.message, "Oops, failed to save your opinion...");
           }
         });
       },
@@ -394,7 +394,7 @@
             processor.database.updateUserAnnotation(objectId, userOpinion.opinion);
           },
           error: function(annotation, error) {
-            toastr.error(error.message, "Oops, failed to update this opinion...");
+            // toastr.error(error.message, "Oops, failed to update this opinion...");
           }
         });
 
@@ -416,10 +416,10 @@
               var entry = {annotationId: objectId, opinion: opinion}
               processor.database.saveUserAnnotation(entry);
             }
-            toastr.success("Opinion Updated", "Thank you");
+            // toastr.success("Opinion Updated", "Thank you");
           },
           error: function(annotation, error) {
-            toastr.error(error.message, "Oops, failed to update your opinion...");
+            // toastr.error(error.message, "Oops, failed to update your opinion...");
           }
         });
       },
@@ -482,12 +482,12 @@
               var annotationsIdList = generateAnnotationsIdList(results);
               $.extend(true, processor.postList, annotationsInPosts);
 
-              toastr.info(" ", results.length.toString() + " annotations found");
+              // toastr.info(" ", results.length.toString() + " annotations found");
               callback(annotationsIdList, annotationsInPosts);
             }
           },
           error: function(error) {
-            toastr.error(error.message, "Oops, something goes wrong...");
+            // toastr.error(error.message, "Oops, something goes wrong...");
           }
         });
       },
@@ -510,7 +510,7 @@
             callback(processor.user.opinions);
           },
           error: function(error) {
-            toastr.error(error.message, "Oops, something goes wrong...");
+            // toastr.error(error.message, "Oops, something goes wrong...");
           }
         });
       },
