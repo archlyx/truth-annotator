@@ -38,7 +38,8 @@
         "*://twitter.com/*",
         "*://disqus.com/*",
         "*://www.engadget.com/*",
-        "*://www.usmessageboard.com/*"
+        "*://www.usmessageboard.com/*",
+        "*://www.cnn.com/*"
         //"*://*/*"
       ],
 
@@ -64,6 +65,7 @@
         "js/processor/modules/processor.engadget.js",
         "js/processor/modules/processor.usmessageboard.js",
         "js/processor/modules/processor.vbulletin.js",
+        "js/processor/modules/processor.cnn.js",
         "js/popline/jquery.popline.js",
         "js/popline/plugins/jquery.popline.opinion.js",
         "js/popline/plugins/jquery.popline.annotation.js",

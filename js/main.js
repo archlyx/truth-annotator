@@ -19,17 +19,25 @@ $(document).ready(function() {
   var iframe = false;
   var host = window.location.host;
 
-  if (host === "twitter.com"){
-    processor.useModule("twitter");
-  } else if (host === "disqus.com") {
-    processor.useModule("disqus");
-    iframe = true;
-  } else if (host === "www.engadget.com") {
-    processor.useModule("engadget");
-  } else if (host === "www.usmessageboard.com") {
-    processor.useModule("usmessageboard");
-  } else {  
-    processor.useModule("vbulletin");
+  switch(host){
+    case "twitter.com":
+      processor.useModule("twitter");
+      break;
+    case "disqus.com":
+      processor.useModule("disqus");
+      break;
+    case "www.engadget.com":
+      processor.useModule("engadget");
+      break;
+    case "www.usmessageboard.com":
+      processor.useModule("usmessageboard");
+      break;
+    case "vbulletin.com":
+      processor.useModule("vbulletin");
+      break;
+    case "www.cnn.com":
+      processor.useModule("cnn");
+      break;
   }
   
   processor.option.initializeOptions(function(){

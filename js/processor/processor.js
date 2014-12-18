@@ -35,8 +35,10 @@
           processor.utils.initAnnotationDisplay(processor.postList[id], opinions);
         }
       };
-
-      processor.refreshPostList();
+      
+      //TODO remove this 
+      if(window.location.host != "www.cnn.com")
+        processor.refreshPostList();
 
       if (isUserValidate & processor.option._enable) {
         $(processor.initElements).popline();
