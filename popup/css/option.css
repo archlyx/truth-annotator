@@ -63,10 +63,11 @@ hr {
 h1 {
   font-family: "Roboto-Black";
   position:relative;
-  top: 20px;
+  top: 35px;
   font-size: 32px; 
   text-align:center;
   color: #357ae8;
+  padding-bottom: 20px;
 }
 
 body {
@@ -77,14 +78,13 @@ body {
 }
 
 .Annotation {
-  top:13px;
   display:inline-block;
   font-size:20px;
   float:left;
   text-align:left;
 }
 .mark {
-  right:-6px;  
+  right: -8px;
   display:inline-block;
 }
 
@@ -99,33 +99,29 @@ body {
 
 #switch1 { 
   position: relative;
-  top:-25px;
-  margin: 20px auto 20px auto;
   text-align: center;
 }
 
 #switch2 { 
   position: relative;
-  margin: 20px auto 200px auto;
   text-align: center;
 }
 
 #switch3 {
-  color: #333;
   position: relative;
-  margin: 10px auto 20px auto;
   text-align: center;
 }
 
 .option-util {
-  position:absolute;
-  top:70px;
-  right:0px;
+  position: absolute;
+  top: 8px;
+  right: 20px;
   font-size: 18px;
 }
 
 .option-card a {
   text-decoration: none;
+  padding: 0 3px;
   color: #666;
   font-weight: 400;
   font-size: 15px;
@@ -138,12 +134,18 @@ body {
   opacity: 1;
 }
 
-
-p {
-  color: #2D2D2D;
+ul {
+  position: relative;
+  left: 10px;
+  bottom: 25px;
+  list-style-type: none;
+  color: #666;
+  opacity: 0.8;
   font-size: 20px;
-  line-height: 1.2em;
-  margin: 11px;
+}
+
+ul li {
+  padding-top: 12px;
 }
 
 /*
@@ -174,7 +176,7 @@ margin: 10px 0px 40px 0px;
 .Switch {
 position: relative;
 display: inline-block;
-top:13px;
+top: 0px;
 font-size: 18px;
 font-weight: bold;
 color: #ccc;

@@ -19,7 +19,7 @@ function generateToggleHTML(currentUserId, _callback) {
   query.find({
     success: function(objects) {
       var inHtml_util = '<a href="#" id="welcome-myboard">Page</a> <a> | </a>' +
-                        '<a href="option.html" id="welcome-option">Option</a> <a> | </a>' +
+                        '<a href="option.html" id="welcome-option">Options</a> <a> | </a>' +
                         '<a href="#" id="welcome-logout">Logout</a> <a> | </a>' +
                         '<a href="#" id="welcome-close">Close</a>';
 

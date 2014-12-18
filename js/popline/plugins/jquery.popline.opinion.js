@@ -205,7 +205,7 @@
 
         if (!this.data("click-event-binded") && !popline.settings.displayOnly) {
           this.mouseenter(function() {
-            var width = (popline.settings.mode === "display") ? 139 : 100;
+            var width = (popline.settings.mode === "display") ? 139 : 109;
             hoverEvent.expansion.call(this, width, 300, 400);
             popline.bar.find(".popline-nextArrow-button").animate({left: 139}, 300, "linear");
           });
