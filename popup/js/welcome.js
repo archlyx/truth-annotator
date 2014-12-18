@@ -106,7 +106,7 @@ function bindEvent(userId){
   });
   
   $("#welcome-myboard").click(function(){
-    var newURL = "http://www.truthchalk.com/personal.html";
+    var newURL = "http://www.truthchalk.com/";
     chrome.tabs.create({ url: newURL });
   });
     

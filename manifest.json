@@ -1,7 +1,7 @@
 {
   "name": "Truth Chalk",
 
-  "version": "0.0.4",
+  "version": "0.0.6",
 
   "manifest_version": 2,
 
@@ -34,7 +34,15 @@
         "*://twitter.com/*",
         "*://disqus.com/*",
         "*://www.engadget.com/*",
-        "*://www.usmessageboard.com/*"
+        "*://www.usmessageboard.com/*",
+        "*://news.yahoo.com/*",
+        "*://www.huffingtonpost.com/*",
+        "*://www.nytimes.com/*",
+        "*://www.foxnews.com/*",
+        "*://www.nbcnews.com/*",
+        "*://www.dailymail.co.uk/*",
+        //"*://www.vbulletin.com/*",
+        "*://www.cnn.com/*"
       ],
 
       "css": [
@@ -58,8 +66,11 @@
         "js/processor/modules/processor.disqus.js",
         "js/processor/modules/processor.engadget.js",
         "js/processor/modules/processor.usmessageboard.js",
-        "js/processor/modules/processor.vbulletin.js",
-        "js/processor/modules/processor.cnn.js",
+        //"js/processor/modules/processor.vbulletin.js",
+        //"js/processor/modules/processor.cnn.js",
+        //"js/processor/modules/processor.newsyahoo.js",
+        //"js/processor/modules/processor.huffingtonpost.js",
+        "js/processor/modules/processor.newswebsite.js",
         "js/popline/jquery.popline.js",
         "js/popline/plugins/jquery.popline.opinion.js",
         "js/popline/plugins/jquery.popline.annotation.js",

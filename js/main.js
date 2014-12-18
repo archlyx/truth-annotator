@@ -1,7 +1,7 @@
 /*
   TruthChalk
   Version 0.0.1
-  (c) 2014 by Yu Zhou, Shuangping Liu
+  (c) 2014 by TruthChalk team
 */
 
 // Initialize parse database 
@@ -32,16 +32,24 @@ $(document).ready(function() {
     case "www.usmessageboard.com":
       processor.useModule("usmessageboard");
       break;
+    /* 
     case "vbulletin.com":
       processor.useModule("vbulletin");
       break;
+    */
     case "www.cnn.com":
-      processor.useModule("cnn");
+    case "www.foxnews.com":
+    case "www.nbcnews.com":
+    case "www.nytimes.com":
+    case "www.dailymail.co.uk":
+    case "news.yahoo.com":
+    case "www.huffingtonpost.com":
+      processor.useModule("newswebsite");
       break;
   }
   
   processor.option.initializeOptions(function(){
-    console.log("init option loaded");
+    //console.log("init option loaded");
   });
   
   //There may be multiple disqus domain iframe running on the page
@@ -55,6 +63,7 @@ $(document).ready(function() {
           clearInterval(waitIframe);
         }
         waitingTime ++;
+        //if waiting the iframe for too long, cancel waiting
         if(waitingTime > 10)
           clearInterval(waitIframe);
       }, 3000);
@@ -72,15 +81,15 @@ $(document).ready(function() {
     Listen to popup page login/logout, update user info
     depends on if it is an iframe
   */ 
-  if (!window.isTop | !iframe) {
-  console.log("listener added");
+  if (!window.isTop || !iframe) {
+  //console.log("listener added");
    chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (key in changes) {
       var storageChange = changes[key];
-      console.log("the key is ", key);
+      //console.log("the key is ", key);
       switch(key){
         case 'enable':
-          console.log("the enable is changed to", storageChange.newValue);
+          //console.log("the enable is changed to", storageChange.newValue);
             processor.option._enable = storageChange.newValue;
             processor.clearAnnotations();        
             processor.user.getLoginUser(function(user) {

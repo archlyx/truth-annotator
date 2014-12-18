@@ -26,7 +26,8 @@
         processor.postList[info.postId] = {username: info.userName, element: this};
       });
     },
-
+      
+    //every times call 
     refreshAnnotations: function(user) {
       var isUserValidate = !processor.user.isUserLogOut(user);
       
@@ -36,14 +37,15 @@
         }
       };
       
-      //TODO remove this 
-      if(window.location.host != "www.cnn.com")
+      // #1 refresh the postlist get from the current web page
         processor.refreshPostList();
 
+      // #2 popline initialize on the specific element, popline activated 
       if (isUserValidate & processor.option._enable) {
         $(processor.initElements).popline();
       }
 
+      // #3 highlight existing annotations on the page 
       processor.database.queryAnnotation(function(annotationsIdList, annotationsInPosts) {
         if (isUserValidate) {
           processor.database.queryUserAnnotation(annotationsIdList, function(opinions) {
@@ -82,7 +84,7 @@
             processor.option._wholeWord = 1;
           if (processor.option._enable === undefined || processor.option._enable === null)
             processor.option._enable = 1;
-          console.log("the init options are ", processor.option._wholeWord, processor.option._enable); 
+          //console.log("the init options are ", processor.option._wholeWord, processor.option._enable); 
           //processor.user._highlight = result.highlight;
           _callback();
         });
@@ -344,6 +346,7 @@
       saveAnnotation: function(entry) {
         var Annotation = Parse.Object.extend(ANNOTATION_TABLE_NAME);
         var annotation = new Annotation();
+        //console.log(entry);
 
         annotation.save(entry,
         {
@@ -514,6 +517,8 @@
 
         var query = new Parse.Query(Annotation);
         query.containedIn("postId", Object.keys(processor.postList));
+        if(window.location.host == "www.cnn.com")
+          query.equalTo("sourceURL", document.URL);
 
         query.find({
           success: function(results) {

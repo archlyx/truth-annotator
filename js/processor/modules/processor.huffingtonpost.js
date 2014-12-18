@@ -1,25 +1,26 @@
 /*
-  processor.cnn.js
+  processor.huffingtonpost.js
   (c) 2014 by TruthChalk team
 */
 
 ;(function(processor, $) {
   processor.addModule({
-    cnn: {
+    huffingtonpost: {
       initElements: "body",
       container: "p",
       // the counting element is for couting the container element within it
-      countingElement:"", 
-      
+      //countingElement:".body", 
+
       getInfoFromContainer: function(element) {
-        //FIXME the "p" should be the container element
+        //console.log(element);
         var index = $("p").index(element)
         //console.log("the index is ", index);
-        return {postId: index.toString(), userName: "cnn-editor"};
+        return {postId: index.toString(), userName: "H-editor"};
+      //index only counte in the "body" class element
       },
 
       initializeUpdateEvent: function() {
-        console.log("this is a static webpage");
+        console.log("init update event");
       }
     }
   });

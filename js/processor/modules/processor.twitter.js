@@ -1,7 +1,7 @@
 /*
   processor.twitter.js
 
-  (c) 2014 by archlyx
+  (c) 2014 by TruthChalk team
 */
 
 ;(function(processor, $) {
