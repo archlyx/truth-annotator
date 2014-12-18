@@ -97,7 +97,7 @@
           var left = event.pageX - bar.width() / 2;
           var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
           if (left < 0) left = 10;
-          var top = scrollTop + event.pageY - bar.outerHeight() - 10;
+          var top = scrollTop + target[0].getBoundingClientRect().top - bar.outerHeight() - 10;
           return {left: left, top: top};
         }
       }
