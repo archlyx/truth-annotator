@@ -504,8 +504,8 @@
             };
 
             postId = results[j].get("postId");
-            annotationsInPosts[postId] = annotationsInPosts[postId] || {annotations: {}};
             if ((annotation.numberOfAgree > 0) || (annotation.numberOfDisagree > 0)) {
+              annotationsInPosts[postId] = annotationsInPosts[postId] || {annotations: {}};
               annotationsInPosts[postId].annotations[results[j].id] = annotation;
             }
           }
