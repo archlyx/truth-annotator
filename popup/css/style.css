@@ -335,7 +335,6 @@ input[type=text], input[type=email], input[type=password] {
 
 .stat-goPost:hover{
   cursor:pointer;
-  text-decoration: underline;
   opacity: 1;
 }
 
@@ -353,10 +352,10 @@ input[type=text], input[type=email], input[type=password] {
 }
 
 #con_goPost:hover{
-position: relative;
-right: -60px;
-cursor:pointer;
-opacity: 1;
+  position: relative;
+  right: -60px;
+  cursor:pointer;
+  opacity: 1;
 }
 
 #retweet_mark{
