@@ -98,7 +98,7 @@ input[type=text], input[type=email], input[type=password] {
 .login-card a {
   position: relative;
   top: 20px;
-  right:-7px;
+  right:10px;
   text-decoration: none;
   color: #666;
   font-weight: 400;
@@ -276,7 +276,7 @@ input[type=text], input[type=email], input[type=password] {
 
 .welcome-card .stat-author{
   font-family: "Roboto-Slab-Regular";
-  font-size: 16px;
+  font-size: 14px;
   text-align: right;
   color: #357ae8;
   margin-top: 30px;
@@ -287,7 +287,7 @@ input[type=text], input[type=email], input[type=password] {
 .welcome-card .stat-text {
   font-family: "Roboto-Slab-Regular";
   text-align: left;
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: -15px;
 }
     

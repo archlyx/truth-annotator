@@ -78,9 +78,9 @@
         chrome.storage.local.get(['enable', 'wholeWord'], function(result) {
           processor.option._wholeWord = result.wholeWord;
           processor.option._enable = result.enable;
-          if (processor.option._wholeWord === undefined)
+          if (processor.option._wholeWord === undefined || processor.option._wholeWord === null)
             processor.option._wholeWord = 1;
-          if (processor.option._enable === undefined)
+          if (processor.option._enable === undefined || processor.option._enable === null)
             processor.option._enable = 1;
           console.log("the init options are ", processor.option._wholeWord, processor.option._enable); 
           //processor.user._highlight = result.highlight;
