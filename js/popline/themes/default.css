@@ -1,46 +1,152 @@
+@font-face {
+  font-family: "Roboto-Condensed-Light";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/RobotoCondensed-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Black";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Slab-Bold";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/RobotoSlab-Bold.ttf") format("truetype");
+}
+
 .popline {
-  min-height: 40px;
+  min-height: 45px;
   max-width: 340px;
-  line-height: 40px;
+  line-height: 45px;
   position: absolute;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.75);
-  background: rgba(56, 169, 247, 1.0);
+  background: rgba(56, 169, 247, 0.0);
   opacity: 0.95;
   display: none;
   margin: 0;
   list-style: none;
   padding: 0px 10px;
-  font-family: "Segoe UI Semilight", Helvetica, "Hiragino Sans GB", sans-serif;
   text-rendering: optimizeLegibility;
   white-space: pre-wrap;
 }
 
-.popline li {
-  padding-top: 4px;
+.popline-display .popline-unselected {
+  opacity: 0.65;
 }
 
 .popline .popline-button {
-  color: white;
   font-size: 18px;
   font-weight: normal;
   cursor: pointer;
   min-width: 24px;
   text-align: center;
   display: inline-block;
+  height: 45px;
 }
 
-.popline .popline-button i {
-  color: rgba(255, 255, 255, 1.0);
+.popline .popline-thumbsUp-button {
+  background: rgba(112, 173, 71, 1);
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  position: absolute;
+  width: 48px;
+  right: 20px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  transition: opacity 300ms linear;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: "Roboto-Slab-Bold";
 }
 
-.popline .popline-button i.button-selected {
-  color: rgba(200, 200, 200, 1.0);
+.popline-display .popline-thumbsUp-button {
+  width: 80px;
 }
 
-.popline .popline-button i.button-disabled {
-  color: rgba(180, 180, 180, 0.7);
+.popline-display .popline-thumbsUp-button:hover {
+  opacity: 1.0;
 }
 
+.popline .popline-thumbsDown-button {
+  background: rgba(255, 45, 45, 1);
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  position: absolute;
+  width: 48px;
+  left: 0px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  transition: opacity 300ms linear;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Roboto-Slab-Bold";
+}
+
+.popline-display .popline-thumbsDown-button {
+  width: 80px;
+}
+
+.popline-display .popline-thumbsDown-button:hover {
+  opacity: 1.0;
+}
+
+.popline span.suffix{
+  display: none;
+}
+
+.popline .popline-button .text {
+  font-size: 25px;
+  line-height: 25px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.popline-annotation span.trueIcon {
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 11px;
+  text-align: left;
+}
+
+.popline-annotation span.falseIcon {
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 11px;
+  text-align: left;
+}
+
+.popline-display span.trueIcon {
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 11px;
+  text-align: left;
+}
+
+.popline-display span.falseIcon {
+  display: inline-block;
+  position: absolute;
+  left: 52px;
+  top: 11px;
+  text-align: left;
+}
+
+.popline-display span.numTrue {
+  display: inline-block;
+  position: absolute;
+  font-size: 20px !important;
+  right: 10px;
+  top: 11px;
+  text-align: right;
+  font-family: "Roboto-Condensed-Light";
+}
+
+.popline-display span.numFalse {
+  display: inline-block;
+  position: absolute;
+  font-size: 20px !important;
+  left: 10px;
+  top: 11px;
+  text-align: left;
+  font-family: "Roboto-Condensed-Light";
+}
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   .popline-annotation .popline-button i {
@@ -54,31 +160,44 @@
   }
 }
 
-.popline .popline-button .text {
-  font-size: 17px; 
-  font-weight: bold;
-  line-height: 25px;
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-}
-
 .popline .popline-button span.text {
   vertical-align: text-top;
 }
 
-.popline .popline-nextArrow-button i {
-  font-size: 10px;
-  padding-left: 13px;
-  vertical-align: 15%;
+.popline-display .popline-nextArrow-button {
+  position: absolute;
+  left: 80px;
+  top: 4px;
+  font-size: 28px;
+  color: rgba(255, 45, 45, 1);
+  opacity: 1.0;
+  transition: opacity 100ms linear;
 }
 
-.popline .popline-prevArrow-button i {
-  font-size: 10px;
-  padding-right: 13px;
-  vertical-align: 15%;
+.popline-display .popline-nextArrow-button:hover {
+  opacity: 0.65;
+}
+
+.popline-display .popline-prevArrow-button {
+  position: absolute;
+  right: 100px;
+  top: 4px;
+  font-size: 28px;
+  color: rgba(112, 173, 71, 1);
+  opacity: 1.0;
+  transition: opacity 100ms linear;
+}
+
+.popline-display .popline-prevArrow-button:hover {
+  opacity: 0.65;
 }
 
 .popline .subbar {
   display: none;
   list-style: none;
   padding: 0;
+}
+
+.tc-cancel-cursor {
+  cursor: url(chrome-extension://__MSG_@@extension_id__/img/cancel.svg), auto;
 }

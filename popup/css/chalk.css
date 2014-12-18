@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "chalk-font";
-    url("chrome-extension://__MSG_@@extension_id__/popup/util/font/chalk-font.ttf") format("truetype");
+  src: url("chrome-extension://__MSG_@@extension_id__/popup/util/font/chalk-font.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 

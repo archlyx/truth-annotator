@@ -44,7 +44,7 @@
       ],
 
       "css": [
-        "css/ta-font.css",
+        "css/tc-font.css",
         "css/highlight.css",
         "js/popline/themes/default.css",
         "js/toastr/toastr.css"
@@ -79,6 +79,7 @@
 
   "web_accessible_resources": [
     "fonts/*",
+    "img/cancel.svg",
     "js/lib/jquery.min.map"
   ]
 }

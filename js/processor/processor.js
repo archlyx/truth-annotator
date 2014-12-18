@@ -1,4 +1,4 @@
-;(function(processor, toastr, rangy, Parse, $) {
+;(function(processor, rangy, Parse, $) {
 
   var ANNOTATION_TABLE_NAME= "Annotation";
   var USER_TABLE_NAME = "User";
@@ -22,7 +22,7 @@
     refreshPostList: function() {
       processor.postList = {};
       $(processor.container).each(function() {
-        var info = processor.getInfoFromContainer(this)
+        var info = processor.getInfoFromContainer(this);
         processor.postList[info.postId] = {username: info.userName, element: this};
       });
     },
@@ -32,7 +32,7 @@
       
       var initDisplay = function(annotationsInPosts, opinions) {
         for (var id in annotationsInPosts) {
-          processor.utils.initAnnotationDisplay(processor.postList[id], opinions);
+          processor.utils.initAnnotationDisplay(id, opinions);
         }
       };
       
@@ -61,8 +61,9 @@
         annotator.destroy();
       }
       for (id in processor.postList) {
-        processor.utils.destroyAnnotationDisplay(processor.postList[id]);
+        processor.utils.destroyAnnotationDisplay(id);
       }
+      processor.postList = null;
     },
 
     /* 
@@ -96,6 +97,8 @@
       objectId: null,
       username: null,
       nickname: null,
+
+      /* The user opinions in current web page */
       opinions: {},
 
       /*
@@ -114,10 +117,10 @@
         return false;
       },
       
-      getLoginUser: function(_callback) {
+      getLoginUser: function(callback) {
         chrome.storage.local.get(['objectId', 'username', 'nickname'], function(user) {
           $.extend(processor.user, user, {opinions: {}});
-          _callback(user);
+          callback(user);
         });
       }
 
@@ -136,88 +139,108 @@
         return null;
       },
 
-      initAnnotationDisplay: function(post, opinions) {
-        var element = post.element, selectedTexts = post.selectedTexts;
+      initAnnotationDisplay: function(postId, opinions) {
+        var post = processor.postList[postId];
+        var element = post.element, annotations = post.annotations;
         var displayOnly = processor.user.isUserLogOut();
 
-        selectedTexts.sort(function(a, b) {
-           return parseInt(a.range.characterRange.start) -
-                  parseInt(b.range.characterRange.start)
+        var annotationArray = [];
+        for (annotationId in annotations) {
+          annotationArray.push(annotations[annotationId]);
+        }
+
+        annotationArray.sort(function(a, b) {
+           return parseInt(a.textRange.characterRange.start) -
+                  parseInt(b.textRange.characterRange.start)
         }); 
 
-        var groupTexts = processor.utils.groupTextRanges(selectedTexts);
+        var groupTexts = processor.utils.groupTextRanges(annotationArray);
         $(element).data("annotation-groups", groupTexts);
 
         for (var i = 0; i < groupTexts.length; i++) {
           var groupSel = groupTexts[i].selections;
+          processor.utils.highlight(element, groupTexts[i], {"annotation-group": i});
           for (var j = 0; j < groupSel.length; j++) {
-            processor.utils.highlight(element, groupSel[j].range, {"annotation-group": i});
             $.extend(groupSel[j], opinions[groupSel[j].id]);
           }
-          $(element).find("[annotation-group = " + i + "]").popline({
+          $(element).find(".tc-annotation-group-" + i).popline({
             mode: "display",
-            selectedText: groupSel, 
-            element: element,
+            annotations: groupSel, 
+            postId: postId,
             displayOnly: displayOnly,
-            enable: ["prevArrow", "thumbsUp", "numThumbsUp", "thumbsDown", "numThumbsDown", "nextArrow"]
+            enable: ["prevArrow", "thumbsUp", "thumbsDown", "nextArrow"]
           });
         }
       },
 
-      destroyAnnotationDisplay: function(post) {
+      destroyAnnotationDisplay: function(postId) {
+        var post = processor.postList[postId];
         var element = post.element;
         var groupTexts = $(element).data("annotation-groups");
-
 
         if (groupTexts) {
           for (var i = 0; i < groupTexts.length; i++) {
             var groupSel = groupTexts[i].selections;
-            var $annotationGroup = $(element).find("[annotation-group = " + i + "]");
+            var $annotationGroup = $(element).find(".tc-annotation-group-" + i);
             $annotationGroup.data("popline").destroy();
-            for (var j = 0; j < groupSel.length; j++) {
-              processor.utils.removeHighlight(element, groupSel[j].range, {"annotation-group": i});
-            }
+            processor.utils.removeHighlight(element, groupTexts[i], {"annotation-group": i});
           }
-          $(element).removeData("groupTexts");
+          $(element).removeData("annotation-groups");
         }
       },
 
-      insertAnnotationDisplay: function(entry, result) {
+      refreshAnnotationDisplay: function(postId) {
+        var post = processor.postList[postId];
+        processor.utils.destroyAnnotationDisplay(postId);
+        if (Object.keys(post.annotations).length > 0) {
+          processor.utils.initAnnotationDisplay(postId, processor.user.opinions);
+        }
+      },
+
+      insertAnnotation: function(entry, result) {
         var annotation = {
           id: result.id,
-          text: entry.selectedText,
-          range: entry.textRange,
-          agree: entry.numberOfAgree,
-          disagree: entry.numberOfDisagree
+          selectedText: entry.selectedText,
+          textRange: entry.textRange,
+          numberOfAgree: entry.numberOfAgree,
+          numberOfDisagree: entry.numberOfDisagree
         };
         processor.user.opinions[result.id] = {opinion: entry.opinion, link: entry.link};
 
         var post = processor.postList[entry.postId];
-        post.selectedTexts = post.selectedTexts || [];
-        post.selectedTexts.push(annotation);
+        post.annotations = post.annotations || {};
+        post.annotations[annotation.id] = annotation;
+      },
 
-        processor.utils.destroyAnnotationDisplay(post);
-        processor.utils.initAnnotationDisplay(post, processor.user.opinions);
+      removeAnnotation: function(postId, annotation) {
+        processor.postList[postId].annotations[annotation.id] = null;
+        delete processor.postList[postId].annotations[annotation.id];
+        processor.user.opinions[annotation.id] = null;
+        delete processor.user.opinions[annotation.id];
       },
 
       groupTextRanges: function(textRanges) {
         var groupRanges = [{
-          end: textRanges[0].range.characterRange.end,
-          start: textRanges[0].range.characterRange.start,
+          characterRange: {
+            end: textRanges[0].textRange.characterRange.end,
+            start: textRanges[0].textRange.characterRange.start
+          },
           selections: [textRanges[0]]
         }];
         var groupOrder = 0;
         for (var i = 1; i < textRanges.length; i++) {
-          var characterRange = textRanges[i].range.characterRange;
+          var characterRange = textRanges[i].textRange.characterRange;
           var group = groupRanges[groupOrder];
 
-          if (characterRange.start < group.end) {
+          if (characterRange.start < group.characterRange.end) {
             group.selections.push(textRanges[i]);
-            group.end = (characterRange.end < group.end) ? group.end : characterRange.end;
+            group.characterRange.end = (characterRange.end < group.characterRange.end) ?
+                                       group.characterRange.end : characterRange.end;
           } else {
-            groupRanges.push({end: characterRange.end,
-                              start: characterRange.start,
-                              selections: [textRanges[i]]});
+            groupRanges.push({
+              characterRange: characterRange,
+              selections: [textRanges[i]]
+            });
             groupOrder = groupOrder + 1;
           }
         }
@@ -230,7 +253,8 @@
 
         if (rangy.supported && classApplierModule && classApplierModule.supported) {
           if (group) {
-            var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight", {elementAttributes : group});
+            var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight " + 
+                                                         "tc-annotation-group-" + group["annotation-group"]);
           } else {
             var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight");
           }
@@ -294,7 +318,8 @@
         var classApplierModule = rangy.modules.ClassApplier || rangy.modules.CssClassApplier;
 
         if (rangy.supported && classApplierModule && classApplierModule.supported) {
-          var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight", {elementAttributes : group});
+          var cssApplier = rangy.createCssClassApplier("ta-annotation-highlight " + 
+                                                       "tc-annotation-group-" + group["annotation-group"]);
           try {
             if (typeof(element) != "undefined" && typeof(textRange) != "undefined") {
               var range = rangy.createRange(element);
@@ -325,17 +350,17 @@
           success: function(result) {
             window.getSelection().removeAllRanges();
 
-            processor.utils.insertAnnotationDisplay(entry, result);
+            processor.utils.insertAnnotation(entry, result);
+            processor.utils.refreshAnnotationDisplay(entry.postId);
             processor.database.saveUserAnnotation(entry, result);
           },
           error: function(result, error) {
-            toastr.error(error.message, "Oops, failed to save this opinion...");
+            // toastr.error(error.message, "Oops, failed to save this opinion...");
           }
         });
       },
 
       saveUserAnnotation: function(entry, result) {
-        // Here result is the result return from Parse
         var UserAnnotation = Parse.Object.extend(USER_ANNOTATION_TABLE_NAME);
         var userAnnotation = new UserAnnotation();
 
@@ -350,11 +375,11 @@
 
         userAnnotation.save(entrySave, {
           success: function(newUserEntry){
-            toastr.success("Opinion Saved", "Thank you");
+            // toastr.success("Opinion Saved", "Thank you");
             processor.database.updateUser();
           },
           error: function(newUserEntry, error){
-            toastr.error(error.message, "Oops, failed to save your opinion...");
+            // toastr.error(error.message, "Oops, failed to save your opinion...");
           }
         });
       },
@@ -406,7 +431,7 @@
             processor.database.updateUserAnnotation(objectId, userOpinion.opinion);
           },
           error: function(annotation, error) {
-            toastr.error(error.message, "Oops, failed to update this opinion...");
+            // toastr.error(error.message, "Oops, failed to update this opinion...");
           }
         });
 
@@ -428,12 +453,13 @@
               var entry = {annotationId: objectId, opinion: opinion}
               processor.database.saveUserAnnotation(entry);
             }
-            toastr.success("Opinion Updated", "Thank you");
+
+            // toastr.success("Opinion Updated", "Thank you");
             //FIXME Is the update of UserStat necessary here? 
             processor.database.updateUser();
           },
           error: function(annotation, error) {
-            toastr.error(error.message, "Oops, failed to update your opinion...");
+            // toastr.error(error.message, "Oops, failed to update your opinion...");
           }
         });
       },
@@ -456,7 +482,9 @@
         var generateAnnotationsIdList = function(results) {
           var annotationsIdList = [];
           for (var j = 0; j < results.length; j++) {
-            if (!(results[j].id in annotationsIdList)) {
+            if (!(results[j].id in annotationsIdList) &&
+                ((results[j].get("numberOfAgree") > 0) ||
+                 (results[j].get("numberOfDisagree") > 0))) {
               annotationsIdList.push(results[j].id);
             }
           }
@@ -469,16 +497,16 @@
           for (var j = 0; j < results.length; j++) {
             var annotation = {
               id: results[j].id,
-              text: results[j].get("selectedText"),
-              range: results[j].get('textRange'),
-              agree: results[j].get("numberOfAgree"),
-              disagree: results[j].get("numberOfDisagree")
+              selectedText: results[j].get("selectedText"),
+              textRange: results[j].get('textRange'),
+              numberOfAgree: results[j].get("numberOfAgree"),
+              numberOfDisagree: results[j].get("numberOfDisagree")
             };
 
             postId = results[j].get("postId");
-            annotationsInPosts[postId] = annotationsInPosts[postId] || {selectedTexts: []};
-            if ($.inArray(annotation, annotationsInPosts[postId]) === -1) {
-              annotationsInPosts[postId].selectedTexts.push(annotation);
+            annotationsInPosts[postId] = annotationsInPosts[postId] || {annotations: {}};
+            if ((annotation.numberOfAgree > 0) || (annotation.numberOfDisagree > 0)) {
+              annotationsInPosts[postId].annotations[results[j].id] = annotation;
             }
           }
           return annotationsInPosts;
@@ -494,12 +522,12 @@
               var annotationsIdList = generateAnnotationsIdList(results);
               $.extend(true, processor.postList, annotationsInPosts);
 
-              toastr.info("Yeah", results.length.toString() + " annotations found");
+              // toastr.info(" ", results.length.toString() + " annotations found");
               callback(annotationsIdList, annotationsInPosts);
             }
           },
           error: function(error) {
-            toastr.error(error.message, "Oops, something goes wrong...");
+            // toastr.error(error.message, "Oops, something goes wrong...");
           }
         });
       },
@@ -522,7 +550,7 @@
             callback(processor.user.opinions);
           },
           error: function(error) {
-            toastr.error(error.message, "Oops, something goes wrong...");
+            // toastr.error(error.message, "Oops, something goes wrong...");
           }
         });
       },
@@ -543,4 +571,4 @@
 
   });
 
-})(window.processor = window.processor || {}, toastr, rangy, Parse, jQuery);
+})(window.processor = window.processor || {}, rangy, Parse, jQuery);

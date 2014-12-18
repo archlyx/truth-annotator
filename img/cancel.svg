@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="cancel.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.839192"
+     inkscape:cx="24.670342"
+     inkscape:cy="12.651454"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1020.3622)">
+    <g
+       transform="scale(1.0356838,0.96554568)"
+       style="font-size:54.50118637px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       id="text2985">
+      <path
+         style="font-size:43.60094833px;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Segoe UI;-inkscape-font-specification:Segoe UI Bold"
+         d="M 1.25 1.4375 L 1.25 6.84375 L 10.21875 6.84375 L 10.21875 30.9375 L 16.46875 30.9375 C 14.537244 29.189003 13.3125 26.665662 13.3125 23.875 C 13.3125 20.66998 14.923352 17.860628 17.375 16.125 L 17.375 6.84375 L 26.375 6.84375 L 26.375 1.4375 L 1.25 1.4375 z "
+         transform="matrix(0.96554566,0,0,1.0356838,0,1056.7726)"
+         id="path3011" />
+    </g>
+    <path
+       style="fill:#ff0000"
+       d="m 23.010788,1036.8941 c -4.027168,0 -7.279981,3.2385 -7.279981,7.2484 0,4.0099 3.252813,7.279 7.279981,7.279 4.027168,0 7.279981,-3.2691 7.279981,-7.279 0,-4.0099 -3.252813,-7.2484 -7.279981,-7.2484 z m 3.041005,2.4061 1.658729,1.6444 -3.071722,3.1979 3.194592,3.137 -1.628013,1.7056 -3.225309,-3.1675 -3.071721,3.1369 -1.65873,-1.6445 3.071722,-3.137 -3.102439,-3.0455 1.65873,-1.6752 3.071721,3.0456 3.10244,-3.1977 z"
+       id="path3015"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

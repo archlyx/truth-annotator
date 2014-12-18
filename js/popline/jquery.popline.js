@@ -10,7 +10,6 @@
 */
 
 ;(function(processor, rangy, $) {
-  //var MARKSYMBOL = [',', '.', '!', '@', '#', '$ 
 
   var isIMEMode = false;
   $(document).on('compositionstart', function(event) {
@@ -93,7 +92,7 @@
       },
       "display": {
         mouseup: function(event) {
-          var element = $.popline.current.settings.element;
+          var element = processor.postList[$.popline.current.settings.postId].element;
           var rect = element.getBoundingClientRect();
           var left = event.pageX - bar.width() / 2;
           var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
@@ -311,6 +310,8 @@
       show: function(options) {
         $.popline.isShow = true;
 
+        $("body").addClass("tc-cancel-cursor");
+
         for (var i = 0, l = this.beforeShowCallbacks.length; i < l; i++) {
           var obj = this.beforeShowCallbacks[i];
           var $button = this.bar.find("li.popline-" + obj.name + "-button");
@@ -350,7 +351,7 @@
           var position = parseInt(_this.bar.css('left')) + _this.bar.width() / 2;
           _this.bar.animate({ opacity: 0, marginTop: -_this.bar.height() + 'px' }, function() {
             hideFunc.call(this);
-            button.removeClass('hover').addClass('boxed').show();
+            button.removeClass('popline-hover').addClass('popline-boxed').show();
             _this.bar.css("margin-top", _this.bar.height() + "px")
             _this.bar.css("left", position - _this.bar.width() / 2 + "px");
             if (typeof(showFunc) === "function") {
@@ -398,6 +399,8 @@
 
     hideAllBar: function() {
       $.popline.isShow = false;
+      $("body").removeClass("tc-cancel-cursor");
+
       for (var i = 0, l = $.popline.instances.length; i < l; i++) {
         $.popline.instances[i].hide();
       }

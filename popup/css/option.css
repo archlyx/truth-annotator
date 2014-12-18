@@ -2,10 +2,14 @@
 /* Resets  */
 /*--------------------------------------------*/
 @font-face {
-  font-family: "Abadi";
-  src: url("../../fonts/Abadi-MT-Cond-Light.ttf");
+  font-family: "Roboto-Condensed";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/RobotoCondensed-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Roboto-Black";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Black.ttf") format("truetype");
+}
 html,body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, address, cite, code,
@@ -57,18 +61,19 @@ hr {
 }
 
 h1 {
+  font-family: "Roboto-Black";
   position:relative;
-  top:20px;
-  font-size:24px;
+  top: 20px;
+  font-size: 32px; 
   text-align:center;
   color: #357ae8;
 }
 
 body {
-font-family: 'Abadi';
-color: #666;
-padding: 0px;
-margin: 0px;
+  font-family: "Roboto-Condensed";
+  color: #666;
+  padding: 0px;
+  margin: 0px;
 }
 
 .Annotation {
@@ -100,15 +105,16 @@ margin: 0px;
 }
 
 #switch2 { 
-position: relative;
-margin: 20px auto 200px auto;
-text-align: center;
+  position: relative;
+  margin: 20px auto 200px auto;
+  text-align: center;
 }
 
-#switch3 { 
-position: relative;
-margin: 20px auto 200px auto;
-text-align: center;
+#switch3 {
+  color: #333;
+  position: relative;
+  margin: 10px auto 20px auto;
+  text-align: center;
 }
 
 .option-util {
@@ -122,7 +128,7 @@ text-align: center;
   text-decoration: none;
   color: #666;
   font-weight: 400;
-  font-size:18px;
+  font-size: 15px;
   display: inline-block;
   opacity: 0.6;
   transition: opacity ease 0.5s;
@@ -134,10 +140,10 @@ text-align: center;
 
 
 p {
-color: #2D2D2D;
-font-size: 20px;
-line-height: 1.2em;
-margin: 15px;
+  color: #2D2D2D;
+  font-size: 20px;
+  line-height: 1.2em;
+  margin: 11px;
 }
 
 /*

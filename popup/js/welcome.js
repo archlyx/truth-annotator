@@ -18,7 +18,10 @@ function generateToggleHTML(currentUserId, _callback) {
   query.limit(5);
   query.find({
     success: function(objects) {
-      var inHtml_util = ' <a href="#" id="welcome-myboard">Page</a> <a> | </a> <a href="option.html" id="welcome-option">Option</a> <a> | </a> <a href="#" id="welcome-logout">Logout</a> <a> | </a> <a href="#" id="welcome-close">Close</a>';
+      var inHtml_util = '<a href="#" id="welcome-myboard">Page</a> <a> | </a>' +
+                        '<a href="option.html" id="welcome-option">Option</a> <a> | </a>' +
+                        '<a href="#" id="welcome-logout">Logout</a> <a> | </a>' +
+                        '<a href="#" id="welcome-close">Close</a>';
 
       //var inHtml_img = '<img id="welcome-img" src="util/chalk1.jpg"/>';
       var inHtml_img = '';
@@ -48,7 +51,7 @@ function generateAnnotation(object, index, _callback){
     var retweet = object.get('retweet');
 
     var inHtml_text = '<p class=stat-text id=stat-text-'+ index +'> " ' + selectedText + ' "</p>';
-    var inHtml_author = '<p class=stat-author>' +'--by '+ author + '</p>';
+    var inHtml_author = '<p class=stat-author>' +'&mdash; by '+ author + '</p>';
     var inHtml_agree = '<span class=stat-agree id=pop_agree>' + agree + '</span>';
     var inHtml_disagree = '<span class=stat-disagree id=pop_disagree>' + disagree + '</span>';
     var inHtml_retweet = '<span class=stat-disagree id=pop_retweet>' + retweet + '</span>';
@@ -63,7 +66,7 @@ function generateAnnotation(object, index, _callback){
     else 
       var inHtml_pop = inHtml_text + inHtml_author + btnup_pop + inHtml_agree + btndown_pop + inHtml_disagree;
 
-    var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'> Go to post at ' + source + '</span>';
+    var inHtml_goPost = '<span class=stat-goPost id=pop_goPost_'+ index+'>' + '<i class="tc-link"></i>' + source + '</span>';
     inHtml_pop = inHtml_pop + inHtml_goPost;
     inHtml_posts = '<div class=post-unit id=post-unit>' + inHtml_pop + '</div>';
     _callback(inHtml_posts);
@@ -133,26 +136,26 @@ function queryCurrentUser(objects, userId, _callback){
   
 function makeButton(btn, color){
   var btnClass;
-  var font;
+  var btnType;
   var id;
   var button;
   if (btn === 'btnup_pop' | btn === 'btnup_con'){
-    btnClass = '"btnup"';
-    font = 'ta-check-mark';
+    btnClass = '"btn-tf btnup"';
+    btnType = 'T';
     if(btn === 'btnup_pop')
     id = '"thumbup_pop"';
     else
     id = '"thumbup_con"';
   }
   else {
-    btnClass = '"btndown"';
-    font = 'ta-x';
+    btnClass = '"btn-tf btndown"';
+    btnType = 'F';
     if(btn === 'btndown_pop')
     id = '"thumbdown_pop"';
     else
     id = '"thumbdown_con"';
   }
-  button = '<span class=' + btnClass + ' id=' + id + ' style="color:'+ color + '"; data-toggle="modal" data-target="#myModal"><i class="fa ' + font + '"></i></span>';
+  button = '<span class=' + btnClass + ' id=' + id + '"; data-toggle="modal" data-target="#myModal">'+ btnType + '</span>';
   return button;
 }
 
