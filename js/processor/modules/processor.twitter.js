@@ -39,7 +39,7 @@
         
         var node = document.getElementById("page-container");
         var observer = new MutationObserver(function(mutations) {
-          updatePosts();
+          $(window).trigger("postUpdated");
         });
 
         try {

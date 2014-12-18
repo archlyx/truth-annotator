@@ -1,4 +1,4 @@
-;(function(processor, toastr, rangy, Parse, $) {
+;(function(processor, rangy, Parse, $) {
 
   var ANNOTATION_TABLE_NAME= "Annotation";
   var USER_TABLE_NAME = "User";
@@ -569,4 +569,4 @@
 
   });
 
-})(window.processor = window.processor || {}, toastr, rangy, Parse, jQuery);
+})(window.processor = window.processor || {}, rangy, Parse, jQuery);

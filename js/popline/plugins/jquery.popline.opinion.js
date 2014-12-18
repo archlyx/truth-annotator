@@ -87,7 +87,10 @@
       beforeShow: function(popline) {
         if (popline.settings.mode === "display") {
           popline.bar.addClass("popline-display");
-          $(this).find(".pop-btn").append("<span class=\"text numTrue\">0</span>");
+          if (!this.data("number-appended")){
+            $(this).find(".pop-btn").append("<span class=\"text numTrue\">0</span>");
+            this.data("number-appended", true);
+          }
         } else if (popline.settings.mode === "annotation") {
           popline.bar.addClass("popline-annotation");
           opinion = 0;
@@ -121,6 +124,10 @@
             opinion = newOpinion;
           });
 
+          this.data("click-event-binded", true);
+        }
+
+        if (!this.data("slide-event-binded")) {
           var _this = this;
           this.on("slideChange", function() {
             var newOpinion = 0;
@@ -132,8 +139,7 @@
 
             $(_this).parent().find(".numTrue").text(popline.currentAnnotation.numberOfAgree);
           });
-
-          this.data("click-event-binded", true);
+          this.data("slide-event-binded", true);
         }
 
       },
@@ -192,8 +198,9 @@
       textClass: "falseIcon",
       mode: "always",
       beforeShow: function(popline) {
-        if (popline.settings.mode === "display") {
+        if (popline.settings.mode === "display" && !this.data("number-appended")) {
           $(this).find(".pop-btn").append("<span class=\"text numFalse\">0</span>");
+          this.data("number-appended", true);
         }
 
         if (!this.data("click-event-binded") && !popline.settings.displayOnly) {
@@ -220,12 +227,15 @@
             opinion = newOpinion;
           });
 
+          this.data("click-event-binded", true);
+        }
+
+        if (!this.data("slide-event-binded")) {
           var _this = this;
           this.on("slideChange", function() {
             $(_this).parent().find(".numFalse").text(popline.currentAnnotation.numberOfDisagree);
           });
-
-          this.data("click-event-binded", true);
+          this.data("slide-event-binded", true);
         }
 
       }
