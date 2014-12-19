@@ -517,8 +517,12 @@
 
         var query = new Parse.Query(Annotation);
         query.containedIn("postId", Object.keys(processor.postList));
-        if(window.location.host == "www.cnn.com")
+        var localHost = window.location.host;
+        if(["www.cnn.com", "www.foxnews.com", "www.nbcnews.com", "www.nytimes.com", "news.yahoo.com",
+        "www.huffingtonpost.com", "www.dailymail.co.uk"].indexOf(localHost) > -1){
+          console.log("this is a news website");
           query.equalTo("sourceURL", document.URL);
+        }
 
         query.find({
           success: function(results) {
