@@ -31,6 +31,7 @@
       if (bar.is(":hidden") || bar.is(":animated")) {
         bar.stop(true, true);
         var pos = Position().mouseup(event);
+        $("body").addClass("tc-cancel-cursor");
         $.popline.current.show(pos);
       }
     } else {
@@ -309,8 +310,6 @@
       
       show: function(options) {
         $.popline.isShow = true;
-
-        $("body").addClass("tc-cancel-cursor");
 
         for (var i = 0, l = this.beforeShowCallbacks.length; i < l; i++) {
           var obj = this.beforeShowCallbacks[i];
